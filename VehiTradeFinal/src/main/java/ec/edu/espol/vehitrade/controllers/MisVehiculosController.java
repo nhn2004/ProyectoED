@@ -99,11 +99,11 @@ public class MisVehiculosController implements Initializable {
                 v = iterator.next();
                 carro1.getChildren().add(crearVBoxVehiculo(v));
             }
-            else if(iterator.hasNext()){
+            if(iterator.hasNext()){
                 v = iterator.next();
                 carro2.getChildren().add(crearVBoxVehiculo(v));
             }
-            else if(iterator.hasNext()){
+            if(iterator.hasNext()){
                 v = iterator.next();
                 carro3.getChildren().add(crearVBoxVehiculo(v));
             }

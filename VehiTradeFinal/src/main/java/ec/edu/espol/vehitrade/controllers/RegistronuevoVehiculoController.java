@@ -89,7 +89,7 @@ public class RegistronuevoVehiculoController implements Initializable {
         valor = s;
         if(s.equals("Auto")){
             Stage stage = (Stage) tipoVehiculo.getScene().getWindow();
-            stage.setHeight(600);
+            stage.setHeight(725);
             registroAuto();
             
         }
@@ -101,7 +101,7 @@ public class RegistronuevoVehiculoController implements Initializable {
         }
         else if(s.equals("Camioneta")){
             Stage stage = (Stage) tipoVehiculo.getScene().getWindow();
-            stage.setHeight(650);
+            stage.setHeight(850);
             registroCamioneta();
             
         }

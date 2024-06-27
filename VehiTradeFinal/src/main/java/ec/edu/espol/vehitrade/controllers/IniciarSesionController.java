@@ -6,8 +6,10 @@ package ec.edu.espol.vehitrade.controllers;
 
 import ec.edu.espol.vehitrade.App;
 import ec.edu.espol.vehitrade.model.DigitosInvalidos;
+import ec.edu.espol.vehitrade.model.DoublyCircularLinkedList;
 import ec.edu.espol.vehitrade.model.SessionManager;
 import ec.edu.espol.vehitrade.model.Usuario;
+import ec.edu.espol.vehitrade.model.Vehiculo;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,6 +42,10 @@ public class IniciarSesionController implements Initializable {
     private void verificar(MouseEvent event) {
         try {
             Usuario u = Usuario.verificarUsuario( correo.getText(), contraseña.getText());
+            DoublyCircularLinkedList<Vehiculo> v= Vehiculo.readListSer();
+            for(Vehiculo ce : v){
+                System.out.println(ce);
+            }
             SessionManager.getInstance().setUsuarioActual(u);
             try {
                 App.setRoot("paginaUsuario");

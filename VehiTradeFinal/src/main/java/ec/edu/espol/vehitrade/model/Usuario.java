@@ -128,6 +128,7 @@ public class Usuario implements Serializable {
         } catch(IOException ioE){
         }
     }
+    @SuppressWarnings("unchecked")
     public static ArrayList<Usuario> readListSer(){
         ArrayList<Usuario> lista= new ArrayList<>();
         try(ObjectInputStream input= new ObjectInputStream(new FileInputStream("UsuarioSer.txt"));){

@@ -6,9 +6,6 @@
     <version>1.0-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <exec.mainClass>ec.edu.espol.demo.Demo</exec.mainClass>
@@ -17,17 +14,31 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>13</version>
+            <version>20.0.2</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>13</version>
+            <version>20.0.2</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>20.0.2</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>20.0.2</version>
             <type>jar</type>
         </dependency>
     </dependencies>
@@ -38,7 +49,10 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <release>11</release>
+                    <release>17</release>
+                    <compilerArgs>
+                        <arg>-Xlint:unchecked</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
@@ -49,7 +63,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.pooespol.ejerciciosu7clase2_2021.Starter</mainClass>
+                            <mainClass>ec.edu.espol.vehitrade.Starter</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -70,59 +84,30 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <id>make-assembly</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
-            
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.4</version>
+                <version>0.0.5</version> <!-- Versión actualizada -->
                 <configuration>
-                    <mainClass>ec.edu.espol.vehitrade.App</mainClass>
+                    <mainClass>ec.edu.espol.vehitrade.App</mainClass> <!-- Ajusta según tu clase principal -->
+                    <jvmArgs>
+                        <arg>--module-path</arg>
+                        <arg>${env.PATH_TO_FX}</arg>
+                        <arg>--add-modules</arg>
+                        <arg>javafx.controls,javafx.fxml</arg>
+                    </jvmArgs>
                 </configuration>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running -->
-                        <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
-                    </execution>
-                    <execution>
-                        <!-- Configuration for manual attach debugging -->
-                        <!-- Usage: mvn clean javafx:run@debug -->
-                        <id>debug</id>
-                        <configuration>
-                            <options>
-                                <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:8000</option>
-                            </options>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <!-- Configuration for automatic IDE debugging -->
-                        <id>ide-debug</id>
-                        <configuration>
-                            <options>
-                                <option>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</option>
-                            </options>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <!-- Configuration for automatic IDE profiling -->
-                        <id>ide-profile</id>
-                        <configuration>
-                            <options>
-				<option>${profiler.jvmargs.arg1}</option>
-				<option>${profiler.jvmargs.arg2}</option>
-				<option>${profiler.jvmargs.arg3}</option>
-				<option>${profiler.jvmargs.arg4}</option>
-				<option>${profiler.jvmargs.arg5}</option>
-                            </options>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
