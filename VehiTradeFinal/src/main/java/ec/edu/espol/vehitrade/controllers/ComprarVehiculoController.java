@@ -53,8 +53,6 @@ public class ComprarVehiculoController implements Initializable {
     @FXML
     private CheckBox faño;
     @FXML
-    private HBox hvehi;
-    @FXML
     private CheckBox frecorrido;
     @FXML
     private CheckBox fprecio;
@@ -69,6 +67,12 @@ public class ComprarVehiculoController implements Initializable {
     private String tipoVehiculoSeleccionado;
     
     private Usuario usuario;
+    @FXML
+    private VBox carro1;
+    @FXML
+    private VBox carro2;
+    @FXML
+    private VBox carro3;
 
     /**
      * Initializes the controller class.
@@ -245,6 +249,14 @@ public class ComprarVehiculoController implements Initializable {
         cuadro.getChildren().addAll(img, datos,aceptar);
 
         return cuadro;
+    }
+
+    @FXML
+    private void anterior(MouseEvent event) {
+    }
+
+    @FXML
+    private void siguiente(MouseEvent event) {
     }
     
     
