@@ -45,6 +45,11 @@ public class MisVehiculosController implements Initializable {
     
     
     private DoublyCircularLinkedList<Vehiculo> vehiculos;
+    private DoublyNodeList<Vehiculo> currentVehiculo1;
+    private DoublyNodeList<Vehiculo>  currentVehiculo2;
+    private DoublyNodeList<Vehiculo>  currentVehiculo3;
+    
+    private int n;
     @FXML
     private VBox carro1;
     @FXML
@@ -61,6 +66,8 @@ public class MisVehiculosController implements Initializable {
         
         usuario=SessionManager.getInstance().getUsuarioActual();
         vehiculos = SessionManager.getInstance().getUsuarioActual().getVehiculos();
+        n=vehiculos.size();
+        System.out.println(n);
         String[] categorias = {"Auto","Moto","Camioneta","Todos"};
         
         cbx.getItems().addAll(categorias);
@@ -84,31 +91,34 @@ public class MisVehiculosController implements Initializable {
     
     private void mostrarVehiculos(DoublyCircularLinkedList<Vehiculo> vehiculos) {
         carro1.getChildren().clear();
-        carro1.getChildren().clear();
-        carro1.getChildren().clear();
-        Iterator<Vehiculo> iterator = vehiculos.iterator();
-        if (!iterator.hasNext()) {
+        carro2.getChildren().clear();
+        carro3.getChildren().clear();
+        n=vehiculos.size();
+        if (n==0) {
             
             Alert a= new Alert(Alert.AlertType.ERROR,"No hay vehiculos por el momento, ingresa uno");
             a.show();
         } else {
-            Vehiculo v;
-            
-            
-            if(iterator.hasNext()){
-                v = iterator.next();
-                carro1.getChildren().add(crearVBoxVehiculo(v));
+            if(n==1){
+                currentVehiculo1 = vehiculos.getLast().getNext();
+                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
+                
             }
-            if(iterator.hasNext()){
-                v = iterator.next();
-                carro2.getChildren().add(crearVBoxVehiculo(v));
+            if(n==2){
+                currentVehiculo1 = vehiculos.getLast().getNext();
+                currentVehiculo2 = currentVehiculo1.getNext();
+                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
+                carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent()));
             }
-            if(iterator.hasNext()){
-                v = iterator.next();
-                carro3.getChildren().add(crearVBoxVehiculo(v));
+            if(n>=3){
+                currentVehiculo1 = vehiculos.getLast().getNext();
+                currentVehiculo2 = currentVehiculo1.getNext();
+                currentVehiculo3 = currentVehiculo2.getNext();
+                carro3.getChildren().add(crearVBoxVehiculo(currentVehiculo3.getContent()));
+                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
+                carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent()));
             }
-            
-            
+ 
         }
     }
 
@@ -251,10 +261,10 @@ public class MisVehiculosController implements Initializable {
         DoublyCircularLinkedList<Vehiculo> veh = new DoublyCircularLinkedList<>();
         if (s.equals("Todos"))
             mostrarVehiculos(vehiculos);
+
         else{
-        
             Iterator<Vehiculo> iterator = vehiculos.iterator();
-            while(!iterator.hasNext()){
+            while(iterator.hasNext()){
                 Vehiculo v = iterator.next();
                 if(v.getTipoVehiculo().equals(s))
                 veh.addLast(v);
@@ -262,13 +272,43 @@ public class MisVehiculosController implements Initializable {
         mostrarVehiculos(veh);
         }
     }
-
+    private void actualizarVehiculos() {
+            carro1.getChildren().clear();
+            carro2.getChildren().clear();
+            carro3.getChildren().clear();
+            carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
+            carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent()));
+            carro3.getChildren().add(crearVBoxVehiculo(currentVehiculo3.getContent()));
+        }
     @FXML
     private void anterior(MouseEvent event) {
+        //ab
+        if(n<3){
+            Alert a= new Alert(Alert.AlertType.INFORMATION,"No hay suficientes vehiculos");
+            a.show();
+        }
+        else{
+            currentVehiculo1=currentVehiculo1.getPrevious();
+            currentVehiculo2=currentVehiculo2.getPrevious();
+            currentVehiculo3=currentVehiculo3.getPrevious();
+            actualizarVehiculos();
+            
+        }
     }
 
     @FXML
     private void siguiente(MouseEvent event) {
+        //ab
+        if(n<3){
+            Alert a= new Alert(Alert.AlertType.INFORMATION,"No hay suficientes vehiculos");
+            a.show();
+        }
+        else{
+            currentVehiculo1=currentVehiculo1.getNext();
+            currentVehiculo2=currentVehiculo2.getNext();
+            currentVehiculo3=currentVehiculo3.getNext();
+            actualizarVehiculos();
+        }
     }
     
 }
