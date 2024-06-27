@@ -6,6 +6,7 @@ package ec.edu.espol.vehitrade.controllers;
 
 import ec.edu.espol.vehitrade.App;
 import ec.edu.espol.vehitrade.model.DoublyCircularLinkedList;
+import ec.edu.espol.vehitrade.model.DoublyNodeList;
 import ec.edu.espol.vehitrade.model.SessionManager;
 import ec.edu.espol.vehitrade.model.Usuario;
 import ec.edu.espol.vehitrade.model.Vehiculo;
@@ -56,8 +57,12 @@ public class ComprarVehiculoController implements Initializable {
     private CheckBox frecorrido;
     @FXML
     private CheckBox fprecio;
-    
+
     private DoublyCircularLinkedList<Vehiculo> vehiculos;
+    private DoublyNodeList<Vehiculo> currentVehiculo1;
+    private DoublyNodeList<Vehiculo> currentVehiculo2;
+    private DoublyNodeList<Vehiculo> currentVehiculo3;
+    private int n;
     private double maxAno;
     private double minAno;
     private double maxRecorrido;
@@ -65,7 +70,7 @@ public class ComprarVehiculoController implements Initializable {
     private double maxPrecio;
     private double minPrecio;
     private String tipoVehiculoSeleccionado;
-    
+
     private Usuario usuario;
     @FXML
     private VBox carro1;
@@ -79,7 +84,7 @@ public class ComprarVehiculoController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        usuario=SessionManager.getInstance().getUsuarioActual();
+        usuario = SessionManager.getInstance().getUsuarioActual();
         vehiculos = Vehiculo.quitarMisVehiculos(SessionManager.getInstance().getUsuarioActual().getVehiculos());
         // TODO
         faño.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -99,7 +104,7 @@ public class ComprarVehiculoController implements Initializable {
                 });
             }
         });
-        
+
         fprecio.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 mostrarDialogoRango("Precio", minPrecio, maxPrecio, (min, max) -> {
@@ -108,11 +113,11 @@ public class ComprarVehiculoController implements Initializable {
                 });
             }
         });
-        String[] categorias = {"Auto","Moto","Camioneta","Todos"};
-        
+        String[] categorias = {"Auto", "Moto", "Camioneta", "Todos"};
+
         cbx.getItems().addAll(categorias);
         mostrarVehiculos(vehiculos);
-    }    
+    }
 
     @FXML
     private void cerrarSesion(MouseEvent event) {
@@ -120,12 +125,12 @@ public class ComprarVehiculoController implements Initializable {
         stage.setHeight(550);
         usuario.updateFile();
         SessionManager.getInstance().cerrarSesion();
-        
+
         try {
-            
+
             App.setRoot("iniciarSesion");
         } catch (IOException ex) {
-           
+
         }
     }
 
@@ -134,40 +139,41 @@ public class ComprarVehiculoController implements Initializable {
         Stage stage = (Stage) cbx.getScene().getWindow();
         stage.setHeight(550);
         try {
-            
+
             App.setRoot("paginaUsuario");
         } catch (IOException ex) {
-           
+
         }
-    
+
     }
 
     @FXML
     private void filtrar(ActionEvent event) {
-        ComboBox cb = (ComboBox)event.getSource();
-        tipoVehiculoSeleccionado = (String)cb.getValue();
+        ComboBox cb = (ComboBox) event.getSource();
+        tipoVehiculoSeleccionado = (String) cb.getValue();
     }
 
     @FXML
     private void filtrarFinal(MouseEvent event) {
         DoublyCircularLinkedList<Vehiculo> veh = vehiculos;
-        if(cbx.getValue() != null && !cbx.getValue().equals("Todos"))
+        if (cbx.getValue() != null && !cbx.getValue().equals("Todos")) {
             veh = Utilitaria.filtrarTipoVehiculo(veh, tipoVehiculoSeleccionado);
-        else if (faño.isSelected())
+        } else if (faño.isSelected()) {
             veh = Utilitaria.filtrarAño(veh, minAno, maxAno);
-        else if (frecorrido.isSelected())
+        } else if (frecorrido.isSelected()) {
             veh = Utilitaria.filtrarRecorrido(veh, minRecorrido, maxRecorrido);
-        else if (fprecio.isSelected())
+        } else if (fprecio.isSelected()) {
             veh = Utilitaria.filtrarPrecio(veh, minPrecio, maxPrecio);
+        }
         mostrarVehiculos(veh);
     }
+
     private void mostrarDialogoRango(String titulo, double valorMinimoActual, double valorMaximoActual, BiConsumer<Double, Double> callback) {
-        
+
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Filtrar por " + titulo);
         dialog.setHeaderText("Ingrese el rango para " + titulo);
 
-        
         ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(okButtonType);
 
@@ -199,21 +205,37 @@ public class ComprarVehiculoController implements Initializable {
             }
         });
     }
-    
+
     private void mostrarVehiculos(DoublyCircularLinkedList<Vehiculo> vehiculos) {
-        hvehi.getChildren().clear();
-    
-        if (vehiculos == null || vehiculos.isEmpty()) {
-            Text t = new Text("No hay vehiculos :(");
-            t.setWrappingWidth(500);
-            t.setTextAlignment(TextAlignment.LEFT);
-            hvehi.getChildren().add(t);
+        carro1.getChildren().clear();
+        carro2.getChildren().clear();
+        carro3.getChildren().clear();
+        n = vehiculos.size();
+        if (n == 0) {
+
+            Alert a = new Alert(Alert.AlertType.INFORMATION, "No hay vehiculos con esas caracteristicas por el momento");
+            a.show();
         } else {
-            Iterator<Vehiculo> veh = vehiculos.iterator();
-            while(!veh.hasNext()){
-                Vehiculo v = veh.next();
-                hvehi.getChildren().add(crearVBoxVehiculo(v));
+            if (n == 1) {
+                currentVehiculo1 = vehiculos.getLast().getNext();
+                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
+
             }
+            if (n == 2) {
+                currentVehiculo1 = vehiculos.getLast().getNext();
+                currentVehiculo2 = currentVehiculo1.getNext();
+                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
+                carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent()));
+            }
+            if (n >= 3) {
+                currentVehiculo1 = vehiculos.getLast().getNext();
+                currentVehiculo2 = currentVehiculo1.getNext();
+                currentVehiculo3 = currentVehiculo2.getNext();
+                carro3.getChildren().add(crearVBoxVehiculo(currentVehiculo3.getContent()));
+                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
+                carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent()));
+            }
+
         }
     }
 
@@ -225,39 +247,67 @@ public class ComprarVehiculoController implements Initializable {
         cuadro.setMaxWidth(VBox.USE_PREF_SIZE);
         cuadro.setMaxHeight(60);
 
-        Image im = new Image(getClass().getResource("/ec/edu/espol/vehitrade/imagenes/"+v.getTipoVehiculo()+".png").toString());
+        Image im = new Image(getClass().getResource("/ec/edu/espol/vehitrade/imagenes/" + v.getTipoVehiculo() + ".png").toString());
         ImageView img = new ImageView(im);
         img.setFitHeight(200);
         img.setFitWidth(250);
-        
-        
+
         Text datos = new Text("Marca: " + v.getMarca() + "\nModelo: " + v.getModelo() + "\nPlaca: " + v.getPlaca());
         datos.setWrappingWidth(300);
         datos.setTextAlignment(TextAlignment.CENTER);
 
         Button aceptar = new Button("Seleccionar");
-                aceptar.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent t) -> {
-                    SessionManager.getInstance().setVehiculoSeleccionado(v);
-                    Stage stage = (Stage) cbx.getScene().getWindow();
-                    stage.setHeight(620);
-                    try {
-                        App.setRoot("generarOferta");
-                    } catch (IOException ex) {
-                    }
-                });
+        aceptar.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent t) -> {
+            SessionManager.getInstance().setVehiculoSeleccionado(v);
+            Stage stage = (Stage) cbx.getScene().getWindow();
+            stage.setHeight(620);
+            try {
+                App.setRoot("generarOferta");
+            } catch (IOException ex) {
+            }
+        });
 
-        cuadro.getChildren().addAll(img, datos,aceptar);
+        cuadro.getChildren().addAll(img, datos, aceptar);
 
         return cuadro;
     }
 
+    private void actualizarVehiculos() {
+        carro1.getChildren().clear();
+        carro2.getChildren().clear();
+        carro3.getChildren().clear();
+        carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
+        carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent()));
+        carro3.getChildren().add(crearVBoxVehiculo(currentVehiculo3.getContent()));
+    }
+
     @FXML
     private void anterior(MouseEvent event) {
+        //ab
+        if (n < 3) {
+            Alert a = new Alert(Alert.AlertType.INFORMATION, "No hay suficientes vehiculos");
+            a.show();
+        } else {
+            currentVehiculo1 = currentVehiculo1.getPrevious();
+            currentVehiculo2 = currentVehiculo2.getPrevious();
+            currentVehiculo3 = currentVehiculo3.getPrevious();
+            actualizarVehiculos();
+
+        }
     }
 
     @FXML
     private void siguiente(MouseEvent event) {
+        //ab
+        if (n < 3) {
+            Alert a = new Alert(Alert.AlertType.INFORMATION, "No hay suficientes vehiculos");
+            a.show();
+        } else {
+            currentVehiculo1 = currentVehiculo1.getNext();
+            currentVehiculo2 = currentVehiculo2.getNext();
+            currentVehiculo3 = currentVehiculo3.getNext();
+            actualizarVehiculos();
+        }
     }
-    
-    
+
 }

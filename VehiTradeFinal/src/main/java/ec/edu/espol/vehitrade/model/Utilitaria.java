@@ -99,14 +99,20 @@ public class Utilitaria {
     }
     
     public static DoublyCircularLinkedList<Vehiculo> filtrarTipoVehiculo(DoublyCircularLinkedList<Vehiculo> vehiculos, String tipo){
-        DoublyCircularLinkedList<Vehiculo> vehFiltrados = new DoublyCircularLinkedList<>();
-        Iterator<Vehiculo> iterator = vehiculos.iterator();
-        while(!iterator.hasNext()){
-            Vehiculo veh = iterator.next();
-            if(veh.getTipoVehiculo().equals(tipo) )
-                vehFiltrados.addLast(veh);     
+        DoublyCircularLinkedList<Vehiculo> veh = new DoublyCircularLinkedList<>();
+        if (tipo.equals("Todos"))
+            return vehiculos;
+
+        else{
+            Iterator<Vehiculo> iterator = vehiculos.iterator();
+            while(iterator.hasNext()){
+                Vehiculo v = iterator.next();
+                if(v.getTipoVehiculo().equals(tipo))
+                veh.addLast(v);
+            }
+            
         }
-        return vehFiltrados;
+        return veh;
     }
 
     public static void enviarCorreo(String correoDestino, String asunto, String mensaje){
