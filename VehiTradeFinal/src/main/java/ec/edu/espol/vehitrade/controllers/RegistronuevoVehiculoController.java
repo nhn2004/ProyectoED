@@ -11,8 +11,11 @@ import ec.edu.espol.vehitrade.model.ObjetoExistente;
 import ec.edu.espol.vehitrade.model.SessionManager;
 import ec.edu.espol.vehitrade.model.Usuario;
 import ec.edu.espol.vehitrade.model.Vehiculo;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,16 +25,17 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
  * FXML Controller class
- *
- * @author nicol
  */
 public class RegistronuevoVehiculoController implements Initializable {
 
@@ -59,60 +63,44 @@ public class RegistronuevoVehiculoController implements Initializable {
     @FXML
     private VBox registroPrecio;
     private String valor;
-    
-    
-    
-    
-    
-    
+
+    @FXML
+    private ImageView imagenVistaPrevia;
+    private File imagenArchivo;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         usuario = SessionManager.getInstance().getUsuarioActual();
-        String[] categorias = {"Auto","Moto","Camioneta"};
-        
+        String[] categorias = {"Auto", "Moto", "Camioneta"};
         tipoVehiculo.getItems().addAll(categorias);
-        
-    }    
+    }
 
     @FXML
     private void filtrar(ActionEvent event) {
-        
         registro1.getChildren().clear();
         registro2.getChildren().clear();
-        ComboBox cb = (ComboBox)event.getSource();
-        String s = (String)cb.getValue();
+        ComboBox cb = (ComboBox) event.getSource();
+        String s = (String) cb.getValue();
         valor = s;
-        if(s.equals("Auto")){
+        if (s.equals("Auto")) {
             Stage stage = (Stage) tipoVehiculo.getScene().getWindow();
             stage.setHeight(725);
             registroAuto();
-            
-        }
-        else if(s.equals("Moto")){
+        } else if (s.equals("Moto")) {
             Stage stage = (Stage) tipoVehiculo.getScene().getWindow();
             stage.setHeight(600);
             registroMoto();
-            
-        }
-        else if(s.equals("Camioneta")){
+        } else if (s.equals("Camioneta")) {
             Stage stage = (Stage) tipoVehiculo.getScene().getWindow();
             stage.setHeight(850);
             registroCamioneta();
-            
         }
-        
-        
-        
-        
-        
     }
-    
-    private void registroMoto(){
+
+    private void registroMoto() {
         Text Placa = new Text("Placa:");
         Placa.setFont(new Font(16));
         VBox.setMargin(Placa, new Insets(20, 0, 0, 0));
@@ -158,11 +146,11 @@ public class RegistronuevoVehiculoController implements Initializable {
         VBox.setMargin(Precio, new Insets(20, 0, 0, 0));
         TextField precio = new TextField();
         VBox.setMargin(precio, new Insets(5, 0, 0, 0));
-        registroPrecio.getChildren().addAll(Precio,precio);
+        registroPrecio.getChildren().addAll(Precio, precio);
         this.precio = precio;
-        
-        registro1.getChildren().addAll(Placa,placa,Modelo,modelo,Año,año,TipoMotor,tipoMotor);
-        registro2.getChildren().addAll(Color,color,Marca,marca,Recorrido,recorrido,TipoCombustible,tipoCombustible);
+
+        registro1.getChildren().addAll(Placa, placa, Modelo, modelo, Año, año, TipoMotor, tipoMotor);
+        registro2.getChildren().addAll(Color, color, Marca, marca, Recorrido, recorrido, TipoCombustible, tipoCombustible);
         this.placa = placa;
         this.marca = marca;
         this.modelo = modelo;
@@ -172,8 +160,8 @@ public class RegistronuevoVehiculoController implements Initializable {
         this.tipoMotor = tipoMotor;
         this.tipoCombustible = tipoCombustible;
     }
-    
-    public void registroAuto(){
+
+    public void registroAuto() {
         registroMoto();
         Text Vidrios = new Text("Vidrios:");
         Vidrios.setFont(new Font(16));
@@ -185,112 +173,133 @@ public class RegistronuevoVehiculoController implements Initializable {
         VBox.setMargin(Transmision, new Insets(20, 0, 0, 0));
         TextField transmision = new TextField();
         VBox.setMargin(transmision, new Insets(5, 0, 0, 0));
-        registro1.getChildren().addAll(Vidrios,vidrios);
-        registro2.getChildren().addAll(Transmision,transmision);
+        registro1.getChildren().addAll(Vidrios, vidrios);
+        registro2.getChildren().addAll(Transmision, transmision);
         this.vidrios = vidrios;
-        this.transmision = transmision; 
-        
+        this.transmision = transmision;
     }
-    
-    public void registroCamioneta(){
+
+    public void registroCamioneta() {
         registroAuto();
         Text Traccion = new Text("Tracción:");
         Traccion.setFont(new Font(16));
         VBox.setMargin(Traccion, new Insets(20, 0, 0, 0));
         TextField traccion = new TextField();
         VBox.setMargin(traccion, new Insets(5, 0, 0, 0));
-        registro1.getChildren().addAll(Traccion,traccion);
+        registro1.getChildren().addAll(Traccion, traccion);
         this.traccion = traccion;
     }
-    
-    public void registrarVehiculo(Vehiculo v){
-        usuario.añadirVehiculo(v);
-        v.updateFile();
-    }
-    
+
+        public void registrarVehiculo(Vehiculo v) {
+         v.setRutaImagen("/ec/edu/espol/vehitrade/ImagenesVehículos/" + v.getPlaca() + ".png");
+         usuario.añadirVehiculo(v);
+         v.updateFile();
+     }
+
     @FXML
-    public void regresar(MouseEvent event){
-        Stage stage = (Stage) tipoVehiculo.getScene().getWindow();
-        stage.setHeight(550);
-        try {
-            
-            App.setRoot("misVehiculos");
-        } catch (IOException ex) {
-            ex.printStackTrace();
+    private void seleccionarImagen(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg"));
+        File archivoSeleccionado = fileChooser.showOpenDialog(tipoVehiculo.getScene().getWindow());
+        if (archivoSeleccionado != null) {
+            imagenArchivo = archivoSeleccionado;
+            Image imagen = new Image(archivoSeleccionado.toURI().toString());
+            imagenVistaPrevia.setImage(imagen);
         }
     }
-    
-    public void ant(){
+
+    @FXML
+    public void regresar(MouseEvent event) {
         Stage stage = (Stage) tipoVehiculo.getScene().getWindow();
         stage.setHeight(550);
         try {
-            
-            
             App.setRoot("misVehiculos");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-
-    @FXML
-    private void aceptar(MouseEvent event) {
+    public void ant() {
+        Stage stage = (Stage) tipoVehiculo.getScene().getWindow();
+        stage.setHeight(550);
         try {
-            Vehiculo.verificarPlaca(placa.getText());
-            Button b = (Button)event.getSource();
-            String s = valor;
-            if((placa.getText().equals(""))||(modelo.getText().equals(""))||(marca.getText().equals(""))||(color.getText().equals(""))||(año.getText().equals(""))||(recorrido.getText().equals(""))||(tipoCombustible.getText().equals(""))){
-                Alert a = new Alert(Alert.AlertType.ERROR,"No escrito nada");
-                a.show();
-            }
-            else{
-                try{
-                    double recorridodouble = Double.parseDouble(this.recorrido.getText());
-                    int añoint = Integer.parseInt(this.año.getText());
-                    double preciodouble = Double.parseDouble(this.precio.getText());
-                    switch (s) {
-                        case "Moto":
-                        {
-                            Vehiculo v = new Vehiculo(s,placa.getText(),modelo.getText(),marca.getText(),tipoMotor.getText(),añoint,recorridodouble,color.getText(),tipoCombustible.getText(),preciodouble,usuario.getId());
-                            registrarVehiculo(v);
-                            
-                            ant();
-                            break;
-                        }
-                        case "Auto":
-                        {
-                            Vehiculo v = new Auto(s,placa.getText(),modelo.getText(),marca.getText(),tipoMotor.getText(),añoint,recorridodouble,color.getText(),tipoCombustible.getText(),preciodouble,usuario.getId(),vidrios.getText(),transmision.getText());
-                            registrarVehiculo(v);
-                            
-                            ant();
-                            break;
-                        }
-                        case "Camioneta":
-                        {
-                            Vehiculo v = new Camioneta(s,placa.getText(),modelo.getText(),marca.getText(),tipoMotor.getText(),añoint,recorridodouble,color.getText(),tipoCombustible.getText(),preciodouble,usuario.getId(),traccion.getText(),vidrios.getText(),transmision.getText());
-                            registrarVehiculo(v);
-                            
-                            ant();
-                            break;
-                        }
-                        default:
-                            break;
-                    }
-                    
-                }
-                catch(NumberFormatException e){                
-                    Alert a = new Alert(Alert.AlertType.ERROR,"Caracteres inválidos\n (Año, Recorrido o Precio no son numeros)");
-                    a.show();
-                    this.precio.setText("");
-                    this.año.setText("");
-                    this.recorrido.setText("");
-                }
-            }
-        } catch (ObjetoExistente ex) {
-            this.placa.setText("");
-            Alert a= new Alert(Alert.AlertType.ERROR,ex.getMessage());
+            App.setRoot("misVehiculos");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+@FXML
+private void aceptar(MouseEvent event) {
+    try {
+        Vehiculo.verificarPlaca(placa.getText());
+        if (placa.getText().equals("") || modelo.getText().equals("") || marca.getText().equals("") || color.getText().equals("") || año.getText().equals("") || recorrido.getText().equals("") || tipoCombustible.getText().equals("")) {
+            Alert a = new Alert(Alert.AlertType.ERROR, "No escrito nada");
             a.show();
+        } else {
+            try {
+                double recorridodouble = Double.parseDouble(this.recorrido.getText());
+                int añoint = Integer.parseInt(this.año.getText());
+                double preciodouble = Double.parseDouble(this.precio.getText());
+                String rutaImagen = "/ec/edu/espol/vehitrade/ImagenesVehículos/" + placa.getText() + ".png";
+                switch (valor) {
+                    case "Moto": {
+                        Vehiculo v = new Vehiculo(valor, placa.getText(), modelo.getText(), marca.getText(), tipoMotor.getText(), añoint, recorridodouble, color.getText(), tipoCombustible.getText(), preciodouble, usuario.getId(), rutaImagen);
+                        registrarVehiculo(v);
+                        if (imagenArchivo != null) {
+                            guardarImagen(imagenArchivo, placa.getText());
+                        }
+                        ant();
+                        break;
+                    }
+                    case "Auto": {
+                        Vehiculo v = new Auto(valor, placa.getText(), modelo.getText(), marca.getText(), tipoMotor.getText(), añoint, recorridodouble, color.getText(), tipoCombustible.getText(), preciodouble, usuario.getId(), vidrios.getText(), transmision.getText(), rutaImagen);
+                        registrarVehiculo(v);
+                        if (imagenArchivo != null) {
+                            guardarImagen(imagenArchivo, placa.getText());
+                        }
+                        ant();
+                        break;
+                    }
+                    case "Camioneta": {
+                        Vehiculo v = new Camioneta(valor, placa.getText(), modelo.getText(), marca.getText(), tipoMotor.getText(), añoint, recorridodouble, color.getText(), tipoCombustible.getText(), preciodouble, usuario.getId(), traccion.getText(), vidrios.getText(), transmision.getText(), rutaImagen);
+                        registrarVehiculo(v);
+                        if (imagenArchivo != null) {
+                            guardarImagen(imagenArchivo, placa.getText());
+                        }
+                        ant();
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            } catch (NumberFormatException e) {
+                Alert a = new Alert(Alert.AlertType.ERROR, "Caracteres inválidos\n (Año, Recorrido o Precio no son numeros)");
+                a.show();
+                this.precio.setText("");
+                this.año.setText("");
+                this.recorrido.setText("");
+            }
         }
-        
+    } catch (ObjetoExistente ex) {
+        this.placa.setText("");
+        Alert a = new Alert(Alert.AlertType.ERROR, ex.getMessage());
+        a.show();
+    }
+}
+
+
+
+    private void guardarImagen(File archivo, String placa) {
+        File directorioDestino = new File("src/ec/edu/espol/vehitrade/ImagenesVehículos");
+        if (!directorioDestino.exists()) {
+            directorioDestino.mkdirs();
+        }
+        File archivoDestino = new File(directorioDestino, placa + ".png");
+        try {
+            Files.copy(archivo.toPath(), archivoDestino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

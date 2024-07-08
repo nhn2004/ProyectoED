@@ -14,8 +14,8 @@ public class Auto extends Vehiculo {
 
     public Auto(String tipo, String placa, String modelo, String marca, String tipoMotor, 
             int año, double recorrido, String color, String tipoCosmbustible, 
-            double precio, int idVendedor,String vidrios, String transmision) {
-        super(tipo, placa, modelo, marca, tipoMotor, año, recorrido, color, tipoCosmbustible, precio,idVendedor);
+            double precio, int idVendedor, String vidrios, String transmision, String rutaImagen) {
+        super(tipo, placa, modelo, marca, tipoMotor, año, recorrido, color, tipoCosmbustible, precio, idVendedor, rutaImagen);
         this.vidrios = vidrios;
         this.transmision = transmision;
     }
@@ -27,11 +27,11 @@ public class Auto extends Vehiculo {
     public String getTransmision() {
         return transmision;
     }
-    
+
     @Override
-    public String toString(){
-        return (super.toString()+",\n"
-                + "Vidrios = "+this.vidrios+",\n"
-                + "Transmisión = "+this.transmision);
+    public String toString() {
+        return super.toString() + ",\n"
+                + "Vidrios = " + this.vidrios + ",\n"
+                + "Transmisión = " + this.transmision;
     }
 }

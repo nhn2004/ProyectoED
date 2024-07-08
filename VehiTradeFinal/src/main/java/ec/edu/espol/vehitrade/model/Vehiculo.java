@@ -13,10 +13,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-/*
- *
- * @author Dom
- */
 public class Vehiculo implements Serializable {
     private String tipoVehiculo;
     private String placa;
@@ -30,14 +26,13 @@ public class Vehiculo implements Serializable {
     private double precio;
     private int idUsuario;
     private DoublyLinkedList<Oferta> ofertas;
-    
-    public Vehiculo(){
-        
-    }
+    private String rutaImagen;
 
-    public Vehiculo(String tipo,String placa, String modelo, String marca, String tipoMotor, 
+    public Vehiculo() {}
+
+    public Vehiculo(String tipo, String placa, String modelo, String marca, String tipoMotor, 
             int año, double recorrido, String color, String tipoCosmbustible, 
-            double precio, int idUsuario) {
+            double precio, int idUsuario, String rutaImagen) {
         this.tipoVehiculo = tipo;
         this.placa = placa;
         this.modelo = modelo;
@@ -48,17 +43,14 @@ public class Vehiculo implements Serializable {
         this.color = color;
         this.tipoCosmbustible = tipoCosmbustible;
         this.precio = precio;
-        this.idUsuario=idUsuario;
+        this.idUsuario = idUsuario;
         this.ofertas = new DoublyLinkedList<>(); 
-        
+        this.rutaImagen = rutaImagen;
     }
-    
-
 
     public int getIdUsuario() {
         return idUsuario;
     }
-    
 
     public String getPlaca() {
         return placa;
@@ -96,6 +88,13 @@ public class Vehiculo implements Serializable {
         return precio;
     }
 
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
+    }
 
     public DoublyLinkedList<Oferta> getOfertas() {
         return ofertas;
@@ -104,35 +103,30 @@ public class Vehiculo implements Serializable {
     public void setOfertas(DoublyLinkedList<Oferta> ofertas) {
         this.ofertas = ofertas;
     }
-    
-    
-
 
     public String getTipoVehiculo() {
         return tipoVehiculo;
     }
-    
-    public void añadirOferta(Oferta o){
+
+    public void añadirOferta(Oferta o) {
         this.ofertas.addLast(o);
     }
-    
-    
 
     @Override
-    public String toString(){
-        return "Este "+this.tipoVehiculo+" tiene:\n"
-                + "Placa = "+this.placa+",\n"
-                + "Marca = "+this.marca+",\n"
-                + "Modelo = "+this.modelo+",\n"
-                + "Tipo de motor = "+this.tipoMotor+",\n"
-                + "Año = "+this.año+",\n"
-                + "Recorrido = "+this.recorrido+",\n"
-                + "Color = "+this.color+",\n"
-                + "Tipo de combustible = "+this.tipoCosmbustible+",\n"
-                + "Precio = "+this.precio;
+    public String toString() {
+        return "Este " + this.tipoVehiculo + " tiene:\n"
+                + "Placa = " + this.placa + ",\n"
+                + "Marca = " + this.marca + ",\n"
+                + "Modelo = " + this.modelo + ",\n"
+                + "Tipo de motor = " + this.tipoMotor + ",\n"
+                + "Año = " + this.año + ",\n"
+                + "Recorrido = " + this.recorrido + ",\n"
+                + "Color = " + this.color + ",\n"
+                + "Tipo de combustible = " + this.tipoCosmbustible + ",\n"
+                + "Precio = " + this.precio + ",\n"
+                + "Ruta de imagen = " + this.rutaImagen;
     }
 
-    
     public static void saveListSer(DoublyCircularLinkedList<Vehiculo> vehiculos) {
         try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("VehiculoSer.txt"))) {
             output.writeObject(vehiculos);
@@ -150,8 +144,8 @@ public class Vehiculo implements Serializable {
         }
         return lista;
     }
-    
-    public void updateFile(){
+
+    public void updateFile() {
         DoublyCircularLinkedList<Vehiculo> vehiculos = Vehiculo.readListSer();
         Iterator<Vehiculo> iterator = vehiculos.iterator();
         while (iterator.hasNext()) {
@@ -162,54 +156,51 @@ public class Vehiculo implements Serializable {
         }
         vehiculos.addLast(this);
         Vehiculo.saveListSer(vehiculos);
-        
     }
-    
-    public DoublyLinkedList<Oferta> vincularOfertasVehiculo(){
+
+    public DoublyLinkedList<Oferta> vincularOfertasVehiculo() {
         DoublyLinkedList<Oferta> off = Oferta.readListSer();
         DoublyLinkedList<Oferta> fin = new DoublyLinkedList<>();
-        for (Oferta o: off){
-            if (o.getPlaca().equals(this.getPlaca())){
+        for (Oferta o : off) {
+            if (o.getPlaca().equals(this.getPlaca())) {
                 fin.addLast(o);
             }
         }
         return fin;
     }
-    
-    public static void verificarPlaca(String placa) throws ObjetoExistente{
+
+    public static void verificarPlaca(String placa) throws ObjetoExistente {
         DoublyCircularLinkedList<Vehiculo> veh = Vehiculo.readListSer();
-        for (Vehiculo v:veh){
-            if (v.getPlaca().equals(placa)){
-                   throw new ObjetoExistente("Vehiculo ya Registrado");
+        for (Vehiculo v : veh) {
+            if (v.getPlaca().equals(placa)) {
+                throw new ObjetoExistente("Vehiculo ya Registrado");
             }
-        } 
+        }
     }
-    
-    public void eliminar(){
+
+    public void eliminar() {
         DoublyCircularLinkedList<Vehiculo> vehiculos = Vehiculo.readListSer();
         Iterator<Vehiculo> iterator = vehiculos.iterator();
         while (iterator.hasNext()) {
             Vehiculo v = iterator.next();
-            if(v.getPlaca().equals(this.getPlaca())) {
+            if (v.getPlaca().equals(this.getPlaca())) {
                 iterator.remove();
             }
         }
         Vehiculo.saveListSer(vehiculos);
     }
-    
-    public static DoublyCircularLinkedList<Vehiculo> quitarMisVehiculos(DoublyCircularLinkedList<Vehiculo> vehiculos){
+
+    public static DoublyCircularLinkedList<Vehiculo> quitarMisVehiculos(DoublyCircularLinkedList<Vehiculo> vehiculos) {
         DoublyCircularLinkedList<Vehiculo> veh = Vehiculo.readListSer();
         Iterator<Vehiculo> iterator = veh.iterator();
         while (iterator.hasNext()) {
             Vehiculo v = iterator.next();
-            for (Vehiculo vehhh: vehiculos){
-                if (v.getPlaca().equals(vehhh.getPlaca()) ) {
+            for (Vehiculo vehhh : vehiculos) {
+                if (v.getPlaca().equals(vehhh.getPlaca())) {
                     iterator.remove(); // Eliminamos el elemento actual de la lista
                 }
             }
         }
         return veh;
-        
     }
- 
 }

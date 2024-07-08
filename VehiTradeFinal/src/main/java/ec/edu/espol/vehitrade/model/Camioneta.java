@@ -14,10 +14,10 @@ public class Camioneta extends Vehiculo {
     private final String vidrios;
     private final String transmision;
 
-    public Camioneta(String tipo,String placa, String modelo, String marca, String tipoMotor, int año, 
-            double recorrido, String color, String tipoCosmbustible, double precio, int idVendedor,String traccion, 
-            String vidrios, String transmision) {
-        super(tipo,placa, modelo, marca, tipoMotor, año, recorrido, color, tipoCosmbustible, precio,idVendedor);
+    public Camioneta(String tipo, String placa, String modelo, String marca, String tipoMotor, int año, 
+            double recorrido, String color, String tipoCosmbustible, double precio, int idVendedor, 
+            String traccion, String vidrios, String transmision, String rutaImagen) {
+        super(tipo, placa, modelo, marca, tipoMotor, año, recorrido, color, tipoCosmbustible, precio, idVendedor, rutaImagen);
         this.traccion = traccion;
         this.vidrios = vidrios;
         this.transmision = transmision;
@@ -26,7 +26,6 @@ public class Camioneta extends Vehiculo {
     public String getTraccion() {
         return traccion;
     }
-    
 
     public String getVidrios() {
         return vidrios;
@@ -35,12 +34,12 @@ public class Camioneta extends Vehiculo {
     public String getTransmision() {
         return transmision;
     }
-    
+
     @Override
-    public String toString(){
-        return (super.toString()+",\n"
-                + "Vidrios = "+this.vidrios+",\n"
-                + "Transmisión = "+this.transmision+",\n"
-                + "Tracción = "+this.traccion);
+    public String toString() {
+        return super.toString() + ",\n"
+                + "Vidrios = " + this.vidrios + ",\n"
+                + "Transmisión = " + this.transmision + ",\n"
+                + "Tracción = " + this.traccion;
     }
 }
