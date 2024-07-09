@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Vehiculo implements Serializable {
+    
     private String tipoVehiculo;
     private String placa;
     private String modelo;
@@ -111,6 +112,53 @@ public class Vehiculo implements Serializable {
     public void añadirOferta(Oferta o) {
         this.ofertas.addLast(o);
     }
+    
+    //setters
+
+    public void setTipoVehiculo(String tipoVehiculo) {
+        this.tipoVehiculo = tipoVehiculo;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public void setTipoMotor(String tipoMotor) {
+        this.tipoMotor = tipoMotor;
+    }
+
+    public void setAño(int año) {
+        this.año = año;
+    }
+
+    public void setRecorrido(double recorrido) {
+        this.recorrido = recorrido;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public void setTipoCosmbustible(String tipoCosmbustible) {
+        this.tipoCosmbustible = tipoCosmbustible;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+    
 
     @Override
     public String toString() {

@@ -13,16 +13,20 @@ import ec.edu.espol.vehitrade.model.Vehiculo;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -30,6 +34,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -136,12 +141,12 @@ public class MisVehiculosController implements Initializable {
 
         Button verDetalleBtn = new Button("Ver Detalle");
         verDetalleBtn.setOnAction(event -> {
-            // Acción a realizar al hacer clic en "Ver Detalle"
+            mostrarDetalleVehiculo(v);
         });
 
         Button editarBtn = new Button("Editar");
         editarBtn.setOnAction(event -> {
-            // Acción a realizar al hacer clic en "Editar"
+            mostrarEditarVehiculo(v);
         });
 
         botonesHBox.getChildren().addAll(verDetalleBtn, editarBtn);
@@ -163,6 +168,53 @@ public class MisVehiculosController implements Initializable {
         }
 
         return cuadro;
+    }
+
+    private void mostrarDetalleVehiculo(Vehiculo v) {
+        Stage detalleStage = new Stage();
+        detalleStage.initModality(Modality.APPLICATION_MODAL);
+        detalleStage.setTitle("Detalle del Vehículo");
+
+        VBox detalleVBox = new VBox();
+        detalleVBox.setSpacing(10);
+        detalleVBox.setPadding(new Insets(20));
+        detalleVBox.setAlignment(Pos.CENTER);
+
+        Label detalleLabel = new Label(v.toString());
+        detalleVBox.getChildren().add(detalleLabel);
+
+        Scene detalleScene = new Scene(detalleVBox, 400, 300);
+        detalleStage.setScene(detalleScene);
+        detalleStage.showAndWait();
+    }
+
+    private void mostrarEditarVehiculo(Vehiculo v) {
+        try {
+            URL fxmlLocation = getClass().getResource("/ec/edu/espol/vehitrade/editarVehiculo.fxml");
+            if (fxmlLocation == null) {
+                System.out.println("El archivo FXML no existe en la ruta especificada.");
+                return;
+            }
+            System.out.println("FXML Location: " + fxmlLocation);
+
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
+            Parent root = loader.load();
+
+            EditarVehiculoController controller = loader.getController();
+            controller.setVehiculo(v);
+            controller.setMisVehiculosController(this);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            // Actualizamos la lista de vehículos después de la edición
+            mostrarVehiculos(vehiculos);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
@@ -196,14 +248,15 @@ public class MisVehiculosController implements Initializable {
         ComboBox cb = (ComboBox) event.getSource();
         String s = (String) cb.getValue();
         DoublyCircularLinkedList<Vehiculo> veh = new DoublyCircularLinkedList<>();
-        if (s.equals("Todos"))
+        if (s.equals("Todos")) {
             mostrarVehiculos(vehiculos);
-        else {
+        } else {
             Iterator<Vehiculo> iterator = vehiculos.iterator();
             while (iterator.hasNext()) {
                 Vehiculo v = iterator.next();
-                if (v.getTipoVehiculo().equals(s))
+                if (v.getTipoVehiculo().equals(s)) {
                     veh.addLast(v);
+                }
             }
             mostrarVehiculos(veh);
         }
