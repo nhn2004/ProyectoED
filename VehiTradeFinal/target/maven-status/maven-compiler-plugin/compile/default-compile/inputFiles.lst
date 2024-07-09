@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\DoublyNodeList.java
 C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\controllers\RegistroController.java
 C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\Auto.java
@@ -27,3 +28,34 @@ C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\Pr
 C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\controllers\EditarVehiculoController.java
 C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\controllers\OfertasVehiculosController.java
 C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\Starter.java
+=======
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/VehiculosController.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/App.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/Starter.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/Auto.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/Camioneta.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/IniciarSesionController.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/RegistronuevoVehiculoController.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/LinkedList.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/MisOfertasController.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/ObjetoExistente.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/VerVehiculoController.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/Oferta.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/DigitosInvalidos.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/MisVehiculosController.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/module-info.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/SessionManager.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/Utilitaria.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/Vehiculo.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/OfertasVehiculosController.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/DoublyNodeList.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/DoublyCircularLinkedList.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/PaginaUsuarioController.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/RegistroController.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/GenerarOfertaController.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/DoublyLinkedList.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/InicioController.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/List.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/ComprarVehiculoController.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/Usuario.java
+>>>>>>> 4475efb4dfd5c180637d711f09fb9b15dd060561

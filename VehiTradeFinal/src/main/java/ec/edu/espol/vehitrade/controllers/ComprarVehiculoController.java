@@ -11,17 +11,19 @@ import ec.edu.espol.vehitrade.model.SessionManager;
 import ec.edu.espol.vehitrade.model.Usuario;
 import ec.edu.espol.vehitrade.model.Vehiculo;
 import ec.edu.espol.vehitrade.model.Utilitaria;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.BiConsumer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -35,7 +37,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -79,14 +80,11 @@ public class ComprarVehiculoController implements Initializable {
     @FXML
     private VBox carro3;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         usuario = SessionManager.getInstance().getUsuarioActual();
         vehiculos = Vehiculo.quitarMisVehiculos(SessionManager.getInstance().getUsuarioActual().getVehiculos());
-        // TODO
+
         faño.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 mostrarDialogoRango("Año", minAno, maxAno, (min, max) -> {
@@ -113,8 +111,8 @@ public class ComprarVehiculoController implements Initializable {
                 });
             }
         });
-        String[] categorias = {"Auto", "Moto", "Camioneta", "Todos"};
 
+        String[] categorias = {"Auto", "Moto", "Camioneta", "Todos"};
         cbx.getItems().addAll(categorias);
         mostrarVehiculos(vehiculos);
     }
@@ -127,10 +125,9 @@ public class ComprarVehiculoController implements Initializable {
         SessionManager.getInstance().cerrarSesion();
 
         try {
-
             App.setRoot("iniciarSesion");
         } catch (IOException ex) {
-
+            ex.printStackTrace();
         }
     }
 
@@ -139,12 +136,10 @@ public class ComprarVehiculoController implements Initializable {
         Stage stage = (Stage) cbx.getScene().getWindow();
         stage.setHeight(550);
         try {
-
             App.setRoot("paginaUsuario");
         } catch (IOException ex) {
-
+            ex.printStackTrace();
         }
-
     }
 
     @FXML
@@ -158,18 +153,20 @@ public class ComprarVehiculoController implements Initializable {
         DoublyCircularLinkedList<Vehiculo> veh = vehiculos;
         if (cbx.getValue() != null && !cbx.getValue().equals("Todos")) {
             veh = Utilitaria.filtrarTipoVehiculo(veh, tipoVehiculoSeleccionado);
-        } else if (faño.isSelected()) {
+        }
+        if (faño.isSelected()) {
             veh = Utilitaria.filtrarAño(veh, minAno, maxAno);
-        } else if (frecorrido.isSelected()) {
+        }
+        if (frecorrido.isSelected()) {
             veh = Utilitaria.filtrarRecorrido(veh, minRecorrido, maxRecorrido);
-        } else if (fprecio.isSelected()) {
+        }
+        if (fprecio.isSelected()) {
             veh = Utilitaria.filtrarPrecio(veh, minPrecio, maxPrecio);
         }
         mostrarVehiculos(veh);
     }
 
     private void mostrarDialogoRango(String titulo, double valorMinimoActual, double valorMaximoActual, BiConsumer<Double, Double> callback) {
-
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Filtrar por " + titulo);
         dialog.setHeaderText("Ingrese el rango para " + titulo);
@@ -212,34 +209,31 @@ public class ComprarVehiculoController implements Initializable {
         carro3.getChildren().clear();
         n = vehiculos.size();
         if (n == 0) {
-
             Alert a = new Alert(Alert.AlertType.INFORMATION, "No hay vehiculos con esas caracteristicas por el momento");
             a.show();
         } else {
             if (n == 1) {
                 currentVehiculo1 = vehiculos.getLast().getNext();
-                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
-
+                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent(), vehiculos, 0));
             }
             if (n == 2) {
                 currentVehiculo1 = vehiculos.getLast().getNext();
                 currentVehiculo2 = currentVehiculo1.getNext();
-                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
-                carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent()));
+                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent(), vehiculos, 0));
+                carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent(), vehiculos, 1));
             }
             if (n >= 3) {
                 currentVehiculo1 = vehiculos.getLast().getNext();
                 currentVehiculo2 = currentVehiculo1.getNext();
                 currentVehiculo3 = currentVehiculo2.getNext();
-                carro3.getChildren().add(crearVBoxVehiculo(currentVehiculo3.getContent()));
-                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
-                carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent()));
+                carro3.getChildren().add(crearVBoxVehiculo(currentVehiculo3.getContent(), vehiculos, 2));
+                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent(), vehiculos, 0));
+                carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent(), vehiculos, 1));
             }
-
         }
     }
 
-    private VBox crearVBoxVehiculo(Vehiculo v) {
+    private VBox crearVBoxVehiculo(Vehiculo v, DoublyCircularLinkedList<Vehiculo> vehiculosFiltrados, int index) {
         VBox cuadro = new VBox();
         cuadro.setSpacing(10);
         cuadro.setAlignment(Pos.CENTER);
@@ -247,7 +241,8 @@ public class ComprarVehiculoController implements Initializable {
         cuadro.setMaxWidth(VBox.USE_PREF_SIZE);
         cuadro.setMaxHeight(60);
 
-        Image im = new Image(getClass().getResource("/ec/edu/espol/vehitrade/imagenes/" + v.getTipoVehiculo() + ".png").toString());
+        File file = new File("src/ec/edu/espol/vehitrade/ImagenesVehículos/" + v.getPlaca() + ".png");
+        Image im = new Image(file.toURI().toString());
         ImageView img = new ImageView(im);
         img.setFitHeight(200);
         img.setFitWidth(250);
@@ -258,32 +253,45 @@ public class ComprarVehiculoController implements Initializable {
 
         Button aceptar = new Button("Seleccionar");
         aceptar.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent t) -> {
-            SessionManager.getInstance().setVehiculoSeleccionado(v);
-            Stage stage = (Stage) cbx.getScene().getWindow();
-            stage.setHeight(620);
-            try {
-                App.setRoot("generarOferta");
-            } catch (IOException ex) {
-            }
+            System.out.println("Botón 'Seleccionar' clicado. Vehículo: " + v);
+            mostrarVehiculoSeleccionado(vehiculosFiltrados, index);
         });
 
         cuadro.getChildren().addAll(img, datos, aceptar);
-
         return cuadro;
+    }
+
+    private void mostrarVehiculoSeleccionado(DoublyCircularLinkedList<Vehiculo> vehiculosFiltrados, int index) {
+        try {
+            System.out.println("Mostrando vehículo seleccionado: " + vehiculosFiltrados.getLast().getContent());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ec/edu/espol/vehitrade/verVehiculo.fxml"));
+            Parent root = loader.load();
+            System.out.println("FXML cargado correctamente.");
+
+            VerVehiculoController controller = loader.getController();
+            controller.setVehiculos(vehiculosFiltrados, index);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+            System.out.println("Nueva ventana mostrada correctamente.");
+        } catch (IOException ex) {
+            System.out.println("Error al cargar la nueva ventana.");
+            ex.printStackTrace();
+        }
     }
 
     private void actualizarVehiculos() {
         carro1.getChildren().clear();
         carro2.getChildren().clear();
         carro3.getChildren().clear();
-        carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
-        carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent()));
-        carro3.getChildren().add(crearVBoxVehiculo(currentVehiculo3.getContent()));
+        carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent(), vehiculos, 0));
+        carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent(), vehiculos, 1));
+        carro3.getChildren().add(crearVBoxVehiculo(currentVehiculo3.getContent(), vehiculos, 2));
     }
 
     @FXML
     private void anterior(MouseEvent event) {
-        //ab
         if (n < 3) {
             Alert a = new Alert(Alert.AlertType.INFORMATION, "No hay suficientes vehiculos");
             a.show();
@@ -292,13 +300,11 @@ public class ComprarVehiculoController implements Initializable {
             currentVehiculo2 = currentVehiculo2.getPrevious();
             currentVehiculo3 = currentVehiculo3.getPrevious();
             actualizarVehiculos();
-
         }
     }
 
     @FXML
     private void siguiente(MouseEvent event) {
-        //ab
         if (n < 3) {
             Alert a = new Alert(Alert.AlertType.INFORMATION, "No hay suficientes vehiculos");
             a.show();
@@ -309,5 +315,4 @@ public class ComprarVehiculoController implements Initializable {
             actualizarVehiculos();
         }
     }
-
 }
