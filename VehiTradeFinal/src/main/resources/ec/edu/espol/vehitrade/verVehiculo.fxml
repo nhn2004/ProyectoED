@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.vehitrade.controllers.VerVehiculoController">
+   <top>
+      <GridPane prefHeight="94.0" prefWidth="600.0" style="-fx-background-color: #121212;" BorderPane.alignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="379.0" minWidth="10.0" prefWidth="356.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="291.0" minWidth="10.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="291.0" minWidth="10.0" prefWidth="120.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
+               <image>
+                  <Image url="@../imagenes/logoh.jpg" />
+               </image>
+            </ImageView>
+            <Button mnemonicParsing="false" onMouseClicked="#cerrar" text="Cerrar" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </GridPane>
+   </top>
+   <center>
+      <VBox alignment="CENTER" spacing="20" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Detalle del Vehiculo" style="-fx-font-size: 30px;" />
+            <ImageView fx:id="vehiculoImage" fitHeight="200.0" fitWidth="250.0" />
+            <Text fx:id="vehiculoDatos" textAlignment="CENTER"/>
+            <HBox alignment="CENTER" spacing="20">
+               <children>
+                  <Button mnemonicParsing="false" onMouseClicked="#anterior" text="Anterior" />
+                  <Button mnemonicParsing="false" onMouseClicked="#siguiente" text="Siguiente" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets top="20" bottom="20" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>
