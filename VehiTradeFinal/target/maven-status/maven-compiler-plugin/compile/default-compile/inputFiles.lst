@@ -1,34 +1,3 @@
-<<<<<<< HEAD
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\DoublyNodeList.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\controllers\RegistroController.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\Auto.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\controllers\VehiculosController.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\Camioneta.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\controllers\MisVehiculosController.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\DigitosInvalidos.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\Usuario.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\controllers\IniciarSesionController.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\SessionManager.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\controllers\RegistronuevoVehiculoController.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\App.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\controllers\InicioController.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\DoublyCircularLinkedList.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\DoublyLinkedList.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\ObjetoExistente.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\Utilitaria.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\Vehiculo.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\module-info.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\Oferta.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\List.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\controllers\PaginaUsuarioController.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\controllers\MisOfertasController.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\controllers\ComprarVehiculoController.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\controllers\GenerarOfertaController.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\model\LinkedList.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\controllers\EditarVehiculoController.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\controllers\OfertasVehiculosController.java
-C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ProyectoED\VehiTradeFinal\src\main\java\ec\edu\espol\vehitrade\Starter.java
-=======
 /Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/VehiculosController.java
 /Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/App.java
 /Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/Starter.java
@@ -47,6 +16,7 @@ C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\Pr
 /Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/SessionManager.java
 /Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/Utilitaria.java
 /Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/Vehiculo.java
+/Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/EditarVehiculoController.java
 /Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/OfertasVehiculosController.java
 /Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/DoublyNodeList.java
 /Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/DoublyCircularLinkedList.java
@@ -58,4 +28,3 @@ C:\Users\USER\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\Pr
 /Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/List.java
 /Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/controllers/ComprarVehiculoController.java
 /Users/abrahamcedeno/Documents/GitHub/ProyectoED/VehiTradeFinal/src/main/java/ec/edu/espol/vehitrade/model/Usuario.java
->>>>>>> 4475efb4dfd5c180637d711f09fb9b15dd060561
