@@ -37,16 +37,6 @@
             <VBox fx:id="registroPrecio" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" spacing="10">
-         <children>
-            <Button mnemonicParsing="false" onAction="#seleccionarImagen" text="Seleccionar Imagen">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-            <ImageView fx:id="imagenVistaPrevia" fitHeight="100.0" fitWidth="100.0" />
-         </children>
-      </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
             <Button mnemonicParsing="false" onMouseClicked="#aceptar" text="Registrar">

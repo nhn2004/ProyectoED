@@ -28,6 +28,8 @@ public class Usuario implements Serializable {
     private String clave;
     private DoublyLinkedList<Oferta> ofertas;
     private DoublyCircularLinkedList<Vehiculo> vehiculos;
+    private String dirImagen; 
+    private DoublyCircularLinkedList<Vehiculo> favoritos;
     
     public Usuario(String nombre, String apellidos, String organizacion, String correoElectronico, String clave) {
         this.id = Usuario.nextId();
@@ -38,7 +40,17 @@ public class Usuario implements Serializable {
         this.clave = clave;
         this.ofertas = new DoublyLinkedList<>();
         this.vehiculos = new DoublyCircularLinkedList<>();
+        this.dirImagen = "C:\\Users\\nicol\\ProyectoED\\VehiTradeFinal\\src\\main\\resources\\ec\\edu\\espol\\vehitrade\\imagenes\\usuario.png";
+        this.favoritos = new DoublyCircularLinkedList<>();
         
+    }
+
+    public String getDirImagen() {
+        return dirImagen;
+    }
+
+    public void setDirImagen(String dirImagen) {
+        this.dirImagen = dirImagen;
     }
 
     public int getId() {
@@ -166,6 +178,27 @@ public class Usuario implements Serializable {
         
         return n+1;
     }
+
+    public DoublyCircularLinkedList<Vehiculo> getFavoritos() {
+        return favoritos;
+    }
+    
+    public void addFavorito(Vehiculo v) {
+    if (!favoritos.contains(v)) {
+        favoritos.addLast(v);
+    }
+}
+
+public void removeFavorito(Vehiculo v) {
+    Iterator<Vehiculo> iterator = favoritos.iterator();
+    while (iterator.hasNext()) {
+        Vehiculo favorito = iterator.next();
+        if (favorito.equals(v)) {
+            iterator.remove();
+            return;
+        }
+    }
+}
     
     public DoublyLinkedList<Oferta> vincularOfertaUsuario(){
         DoublyLinkedList<Oferta> off = Oferta.readListSer();

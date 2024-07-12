@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -15,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.vehitrade.controllers.MisVehiculosController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.vehitrade.controllers.MisVehiculosController">
    <top>
       <GridPane prefHeight="94.0" prefWidth="600.0" style="-fx-background-color: #121212;" BorderPane.alignment="CENTER">
          <columnConstraints>
@@ -32,12 +31,12 @@
                   <Image url="@imagenes/logoh.jpg" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" onMouseClicked="#cerrarSesion" text="Cerrar Sesión" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <Button mnemonicParsing="false" onMouseClicked="#cerrarSesion" style="-fx-background-radius: 25;" text="Cerrar Sesión" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#regresar" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+            <Button mnemonicParsing="false" onMouseClicked="#regresar" style="-fx-background-radius: 25;" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
@@ -78,9 +77,9 @@
             </GridPane>
             <GridPane prefHeight="118.0" prefWidth="600.0">
                <columnConstraints>
-                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="356.0" minWidth="10.0" prefWidth="130.0" />
-                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="356.0" minWidth="10.0" prefWidth="136.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="73.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="356.0" minWidth="10.0" prefWidth="47.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="356.0" minWidth="10.0" prefWidth="269.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="21.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="263.0" />
                </columnConstraints>
                <rowConstraints>
@@ -88,12 +87,12 @@
                   <RowConstraints maxHeight="44.0" minHeight="7.0" prefHeight="21.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ComboBox fx:id="cbx" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#filtrar" prefHeight="30.0" prefWidth="154.0" promptText="Tipo de Vehiculo" GridPane.columnIndex="3" GridPane.halignment="LEFT" />
-                  <VBox prefHeight="81.0" prefWidth="266.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                  <ComboBox fx:id="cbx" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#filtrar" prefHeight="34.0" prefWidth="173.0" promptText="Tipo de Vehiculo" style="-fx-background-radius: 25;" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
+                  <VBox alignment="CENTER" prefHeight="81.0" prefWidth="266.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                      <children>
-                        <Button mnemonicParsing="false" onMouseClicked="#registrarNuevoVehiculo" text="Ingresa un nuevo Vehículo" style="-fx-background-color: #1abc9c; -fx-text-fill: white;">
+                        <Button mnemonicParsing="false" onMouseClicked="#registrarNuevoVehiculo" prefHeight="32.0" prefWidth="212.0" style="-fx-background-color: rgba(224,38,43,255); -fx-background-radius: 25;" text="Ingresa un nuevo Vehículo" textFill="WHITE">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="System Bold" size="15.0" />
                            </font>
                         </Button>
                      </children>
@@ -130,7 +129,7 @@
                         <VBox fx:id="carro3" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" />
                      </children>
                   </VBox>
-                  <Button mnemonicParsing="false" onMouseClicked="#anterior" prefHeight="37.0" prefWidth="28.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Button mnemonicParsing="false" onMouseClicked="#anterior" prefHeight="37.0" prefWidth="28.0" style="-fx-background-color: white;" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <graphic>
                         <ImageView fitHeight="31.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -142,7 +141,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" onMouseClicked="#siguiente" GridPane.columnIndex="4">
+                  <Button mnemonicParsing="false" onMouseClicked="#siguiente" style="-fx-background-color: white;" GridPane.columnIndex="4">
                      <graphic>
                         <ImageView fitHeight="31.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>

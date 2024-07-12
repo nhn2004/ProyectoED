@@ -30,11 +30,17 @@ public class DoublyLinkedList<E> implements List<E>, Serializable {
     public boolean isEmpty(){
         return header == null && last == null;
     }
-    
+
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int count = 0;
+        DoublyNodeList<E> current = header;
+        while (current != null) {
+            count++;
+            current = current.getNext();
+        }
+        return count;
     }
-    
+
     public DoublyNodeList<E> getHeader() {
         return header;
     }
@@ -51,7 +57,6 @@ public class DoublyLinkedList<E> implements List<E>, Serializable {
         this.last = last;
     }
     
-   
     private void recorrerHaciaAtras(){
         DoublyNodeList<E> n;
         for (n = last ; n != header; n = n.getPrevious()){
@@ -88,104 +93,125 @@ public class DoublyLinkedList<E> implements List<E>, Serializable {
             return true;
         }
         return false;
-    
     }
     
     public boolean addAt(E e, int pos)
     {
         if (e != null && pos >= 0 && pos < this.size()) {
             DoublyNodeList<E> newNode = new DoublyNodeList<>(e);
-            
             DoublyNodeList<E> p = header;
-            
-            for(int i=0; i < pos ; i ++){
+            for(int i = 0; i < pos; i++){
                 p = p.getNext();
             }
             newNode.setNext(p.getNext());
             p.setNext(newNode);
-            
             newNode.setPrevious(p);
             newNode.getNext().setPrevious(newNode);
-           
+            return true;
         }
         return false;
     }
     
-    public E removeElement (int pos){
+    public E removeElement(int pos){
+        if (pos < 0 || pos >= this.size()) {
+            return null;
+        }
         DoublyNodeList<E> p = header;
-        
-        for(int i=0; i < pos; i++){
+        for(int i = 0; i < pos; i++){
             p = p.getNext();
         }
-        
-        p.getPrevious().setNext(p.getNext());
-        p.getNext().setPrevious(p.getPrevious());
-        
-        p.setNext(null);
-        p.setPrevious(null);
-        
-        return p.getContent();
+        if (p == header) {
+            return this.removeFirst();
+        } else if (p == last) {
+            return this.removeLast();
+        } else {
+            p.getPrevious().setNext(p.getNext());
+            p.getNext().setPrevious(p.getPrevious());
+            p.setNext(null);
+            p.setPrevious(null);
+            return p.getContent();
         }
+    }
 
     @Override
     public E removeFirst() {
-        if (isEmpty()){
+        if (isEmpty()) {
             return null;
         }
         DoublyNodeList<E> n = header;
-        header = header.getNext();
-        header.setPrevious(null);
+        if (header == last) {
+            header = last = null;
+        } else {
+            header = header.getNext();
+            header.setPrevious(null);
+        }
         return n.getContent();
-        
     }
 
     @Override
     public E removeLast() {
-        if (isEmpty()){
+        if (isEmpty()) {
             return null;
         }
         DoublyNodeList<E> n = last;
-        last = last.getPrevious();
-        last.setNext(null);
+        if (header == last) {
+            header = last = null;
+        } else {
+            last = last.getPrevious();
+            last.setNext(null);
+        }
         return n.getContent();
-        
     }
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        header = last = null;
     }
 
     @Override
     public boolean add(int index, E element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return addAt(element, index);
     }
 
     @Override
     public E remove(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return removeElement(index);
     }
 
     @Override
     public E get(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (index < 0 || index >= this.size()) {
+            return null;
+        }
+        DoublyNodeList<E> p = header;
+        for (int i = 0; i < index; i++) {
+            p = p.getNext();
+        }
+        return p.getContent();
     }
 
     @Override
     public E set(int index, E element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (index < 0 || index >= this.size()) {
+            return null;
+        }
+        DoublyNodeList<E> p = header;
+        for (int i = 0; i < index; i++) {
+            p = p.getNext();
+        }
+        E oldContent = p.getContent();
+        p.setContent(element);
+        return oldContent;
     }
 
     @Override
     public Iterator<E> iterator(){
-        Iterator<E> it=new Iterator<E>() {
-        DoublyNodeList<E> cursor = header;
-                
+        return new Iterator<E>() {
+            DoublyNodeList<E> cursor = header;
             @Override
             public boolean hasNext() {
                 return cursor != null;
             }
-
             @Override
             public E next() {
                 E e = cursor.getContent();
@@ -193,33 +219,29 @@ public class DoublyLinkedList<E> implements List<E>, Serializable {
                 return e;
             }
         };
-        return it;
     } 
     
     @Override
     public String toString(){
-        String fin = "";
-        if (isEmpty()){
-            return fin;
+        StringBuilder fin = new StringBuilder();
+        DoublyNodeList<E> n = header;
+        while (n != null) {
+            fin.append(n.getContent()).append(" ");
+            n = n.getNext();
         }
-        DoublyNodeList<E> n;
-        for (n = header; n!=null ; n.getNext()){
-            fin = fin + n.getContent();
-            
-        }
-        return fin;
+        return fin.toString();
     }
 
-   
     @Override
     public Integer find(Comparator cmp, E elemento) {
-        Iterator<E> it= this.iterator();
+        Iterator<E> it = this.iterator();
         int count = 0;
-        while(it.hasNext()){  
-            E n=it.next();
-            if (cmp.compare(n, elemento) == 0)
+        while (it.hasNext()) {  
+            E n = it.next();
+            if (cmp.compare(n, elemento) == 0) {
                 return count;
-            count +=1;
+            }
+            count += 1;
         }
         return null;
     }
@@ -227,12 +249,14 @@ public class DoublyLinkedList<E> implements List<E>, Serializable {
     @Override
     public List<E> findAll(Comparator cmp, E elemento) {
         DoublyLinkedList<E> nueva = new DoublyLinkedList<>();
-        Iterator<E> it= this.iterator();
-        while(it.hasNext()){  
-            E n=it.next();
-            if (cmp.compare(n, elemento) == 0)
+        Iterator<E> it = this.iterator();
+        while (it.hasNext()) {  
+            E n = it.next();
+            if (cmp.compare(n, elemento) == 0) {
                 nueva.addLast(n);
+            }
         }
         return nueva;
     }
 }
+

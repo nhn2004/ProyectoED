@@ -116,6 +116,7 @@ public class MisVehiculosController implements Initializable {
             }
         }
     }
+    
 
     private VBox crearVBoxVehiculo(Vehiculo v, DoublyCircularLinkedList<Vehiculo> vehiculosFiltrados, int index) {
         VBox cuadro = new VBox();
@@ -125,18 +126,19 @@ public class MisVehiculosController implements Initializable {
         cuadro.setMaxWidth(VBox.USE_PREF_SIZE);
         cuadro.setMaxHeight(60);
 
-        File file = new File("src/ec/edu/espol/vehitrade/ImagenesVehículos/" + v.getPlaca() + ".png");
-        Image im = new Image(file.toURI().toString());
+        Image im = new Image("file:" + v.getDirImagen());
         ImageView img = new ImageView(im);
-        img.setFitHeight(200);
-        img.setFitWidth(250);
+        img.setPreserveRatio(true);
+        
+        img.setFitWidth(100);
+        
         img.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent t) -> {
             Alert a = new Alert(Alert.AlertType.INFORMATION, v.toString());
             a.show();
         });
 
         Text datos = new Text("Marca: " + v.getMarca() + "\nModelo: " + v.getModelo() + "\nPlaca: " + v.getPlaca());
-        datos.setWrappingWidth(300);
+        datos.setWrappingWidth(100);
         datos.setTextAlignment(TextAlignment.CENTER);
 
         HBox botonesHBox = new HBox();

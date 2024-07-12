@@ -12,9 +12,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Comparator;
 
 public class Vehiculo implements Serializable {
-
     private String tipoVehiculo;
     private String placa;
     private String modelo;
@@ -26,15 +26,18 @@ public class Vehiculo implements Serializable {
     private String tipoCosmbustible;
     private double precio;
     private int idUsuario;
+    private String dirImagen;
     private DoublyLinkedList<Oferta> ofertas;
-    private String rutaImagen;
-
-    public Vehiculo() {
+    
+    private boolean esFavorito;
+    
+    public Vehiculo(){
+        
     }
 
-    public Vehiculo(String tipo, String placa, String modelo, String marca, String tipoMotor,
-            int año, double recorrido, String color, String tipoCosmbustible,
-            double precio, int idUsuario, String rutaImagen) {
+    public Vehiculo(String tipo,String placa, String modelo, String marca, String tipoMotor, 
+            int año, double recorrido, String color, String tipoCosmbustible, 
+            double precio, int idUsuario, String dirImagen) {
         this.tipoVehiculo = tipo;
         this.placa = placa;
         this.modelo = modelo;
@@ -45,76 +48,21 @@ public class Vehiculo implements Serializable {
         this.color = color;
         this.tipoCosmbustible = tipoCosmbustible;
         this.precio = precio;
-        this.idUsuario = idUsuario;
-        this.ofertas = new DoublyLinkedList<>();
-        this.rutaImagen = rutaImagen;
+        this.idUsuario=idUsuario;
+        this.ofertas = new DoublyLinkedList<>(); 
+        this.dirImagen = dirImagen;
+        this.esFavorito=false;
+        
     }
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public String getDirImagen() {
+        return dirImagen;
     }
 
-    public String getPlaca() {
-        return placa;
+    public void setDirImagen(String dirImagen) {
+        this.dirImagen = dirImagen;
     }
 
-    public String getModelo() {
-        return modelo;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public String getTipoMotor() {
-        return tipoMotor;
-    }
-
-    public int getAño() {
-        return año;
-    }
-
-    public double getRecorrido() {
-        return recorrido;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public String getTipoCosmbustible() {
-        return tipoCosmbustible;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public String getRutaImagen() {
-        return rutaImagen;
-    }
-
-    public void setRutaImagen(String rutaImagen) {
-        this.rutaImagen = rutaImagen;
-    }
-
-    public DoublyLinkedList<Oferta> getOfertas() {
-        return ofertas;
-    }
-
-    public void setOfertas(DoublyLinkedList<Oferta> ofertas) {
-        this.ofertas = ofertas;
-    }
-
-    public String getTipoVehiculo() {
-        return tipoVehiculo;
-    }
-
-    public void añadirOferta(Oferta o) {
-        this.ofertas.addLast(o);
-    }
-
-    //setters
     public void setTipoVehiculo(String tipoVehiculo) {
         this.tipoVehiculo = tipoVehiculo;
     }
@@ -159,23 +107,99 @@ public class Vehiculo implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    @Override
-    public String toString() {
-        return "Este " + this.tipoVehiculo + " tiene:\n"
-                + "Placa = " + this.placa + ",\n"
-                + "Marca = " + this.marca + ",\n"
-                + "Modelo = " + this.modelo + ",\n"
-                + "Tipo de motor = " + this.tipoMotor + ",\n"
-                + "Año = " + this.año + ",\n"
-                + "Recorrido = " + this.recorrido + ",\n"
-                + "Color = " + this.color + ",\n"
-                + "Tipo de combustible = " + this.tipoCosmbustible + ",\n"
-                + "Precio = " + this.precio + ",\n"
-                + "Ruta de imagen = " + this.rutaImagen;
+    public void setEsFavorito(boolean esFavorito) {
+        this.esFavorito = esFavorito;
+    }
+    
+
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+    
+
+    public String getPlaca() {
+        return placa;
     }
 
+    public String getModelo() {
+        return modelo;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public String getTipoMotor() {
+        return tipoMotor;
+    }
+
+    public int getAño() {
+        return año;
+    }
+
+    public double getRecorrido() {
+        return recorrido;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public String getTipoCosmbustible() {
+        return tipoCosmbustible;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+
+    public DoublyLinkedList<Oferta> getOfertas() {
+        return ofertas;
+    }
+
+    public void setOfertas(DoublyLinkedList<Oferta> ofertas) {
+        this.ofertas = ofertas;
+    }
+    
+    public boolean isFavorite() {
+        return esFavorito;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.esFavorito = favorite;
+    }
+    
+
+
+    public String getTipoVehiculo() {
+        return tipoVehiculo;
+    }
+    
+    public void añadirOferta(Oferta o){
+        this.ofertas.addLast(o);
+    }
+    
+    
+
+    @Override
+    public String toString(){
+        return "Este "+this.tipoVehiculo+" tiene:\n"
+                + "Placa = "+this.placa+",\n"
+                + "Marca = "+this.marca+",\n"
+                + "Modelo = "+this.modelo+",\n"
+                + "Tipo de motor = "+this.tipoMotor+",\n"
+                + "Año = "+this.año+",\n"
+                + "Recorrido = "+this.recorrido+",\n"
+                + "Color = "+this.color+",\n"
+                + "Tipo de combustible = "+this.tipoCosmbustible+",\n"
+                + "Precio = "+this.precio;
+    }
+
+    
     public static void saveListSer(DoublyCircularLinkedList<Vehiculo> vehiculos) {
-        try ( ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("VehiculoSer.txt"))) {
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("VehiculoSer.txt"))) {
             output.writeObject(vehiculos);
         } catch (IOException ioE) {
             ioE.printStackTrace();
@@ -184,72 +208,85 @@ public class Vehiculo implements Serializable {
 
     public static DoublyCircularLinkedList<Vehiculo> readListSer() {
         DoublyCircularLinkedList<Vehiculo> lista = new DoublyCircularLinkedList<>();
-        try ( ObjectInputStream input = new ObjectInputStream(new FileInputStream("VehiculoSer.txt"))) {
+        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream("VehiculoSer.txt"))) {
             lista = (DoublyCircularLinkedList<Vehiculo>) input.readObject();
         } catch (IOException | ClassNotFoundException ioE) {
             ioE.printStackTrace();
         }
         return lista;
     }
-
-    public void updateFile() {
+    
+    public void updateFile(){
         DoublyCircularLinkedList<Vehiculo> vehiculos = Vehiculo.readListSer();
         Iterator<Vehiculo> iterator = vehiculos.iterator();
         while (iterator.hasNext()) {
             Vehiculo v = iterator.next();
             if (v.getPlaca().equals(this.getPlaca())) {
-                iterator.remove(); // Eliminar el vehículo existente
-                break;
+                iterator.remove(); // Eliminamos el elemento actual de la lista
             }
         }
-        vehiculos.addLast(this); // Añadir el vehículo actualizado
+        vehiculos.addLast(this);
         Vehiculo.saveListSer(vehiculos);
+        
     }
-
-    public DoublyLinkedList<Oferta> vincularOfertasVehiculo() {
+    
+    public DoublyLinkedList<Oferta> vincularOfertasVehiculo(){
         DoublyLinkedList<Oferta> off = Oferta.readListSer();
         DoublyLinkedList<Oferta> fin = new DoublyLinkedList<>();
-        for (Oferta o : off) {
-            if (o.getPlaca().equals(this.getPlaca())) {
+        for (Oferta o: off){
+            if (o.getPlaca().equals(this.getPlaca())){
                 fin.addLast(o);
             }
         }
         return fin;
     }
-
-    public static void verificarPlaca(String placa) throws ObjetoExistente {
+    
+    public static void verificarPlaca(String placa) throws ObjetoExistente{
         DoublyCircularLinkedList<Vehiculo> veh = Vehiculo.readListSer();
-        for (Vehiculo v : veh) {
-            if (v.getPlaca().equals(placa)) {
-                throw new ObjetoExistente("Vehiculo ya Registrado");
+        for (Vehiculo v:veh){
+            if (v.getPlaca().equals(placa)){
+                   throw new ObjetoExistente("Vehiculo ya Registrado");
             }
-        }
+        } 
     }
-
-    public void eliminar() {
+    
+    public void eliminar(){
         DoublyCircularLinkedList<Vehiculo> vehiculos = Vehiculo.readListSer();
         Iterator<Vehiculo> iterator = vehiculos.iterator();
         while (iterator.hasNext()) {
             Vehiculo v = iterator.next();
-            if (v.getPlaca().equals(this.getPlaca())) {
+            if(v.getPlaca().equals(this.getPlaca())) {
                 iterator.remove();
             }
         }
         Vehiculo.saveListSer(vehiculos);
     }
-
+    
     public static DoublyCircularLinkedList<Vehiculo> quitarMisVehiculos(DoublyCircularLinkedList<Vehiculo> vehiculos) {
         DoublyCircularLinkedList<Vehiculo> veh = Vehiculo.readListSer();
+
+        // Define un Comparator para comparar los vehículos por su placa
+        Comparator<Vehiculo> comparator = new Comparator<Vehiculo>() {
+            @Override
+            public int compare(Vehiculo v1, Vehiculo v2) {
+                return v1.getPlaca().compareTo(v2.getPlaca());
+            }
+        };
+
         Iterator<Vehiculo> iterator = veh.iterator();
         while (iterator.hasNext()) {
             Vehiculo v = iterator.next();
             for (Vehiculo vehhh : vehiculos) {
-                if (v.getPlaca().equals(vehhh.getPlaca())) {
+                if (comparator.compare(v, vehhh) == 0) {
                     iterator.remove(); // Eliminamos el elemento actual de la lista
+                    break;
                 }
             }
         }
         return veh;
     }
 
+        
+    
+ 
 }

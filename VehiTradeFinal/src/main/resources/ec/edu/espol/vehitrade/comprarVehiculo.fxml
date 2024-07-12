@@ -10,12 +10,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.vehitrade.controllers.ComprarVehiculoController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.vehitrade.controllers.ComprarVehiculoController">
    <top>
       <GridPane prefHeight="94.0" prefWidth="600.0" style="-fx-background-color: #121212;" BorderPane.alignment="CENTER">
          <columnConstraints>
@@ -32,12 +33,12 @@
                   <Image url="@imagenes/logoh.jpg" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" onMouseClicked="#cerrarSesion" text="Cerrar Sesión" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <Button mnemonicParsing="false" onMouseClicked="#cerrarSesion" style="-fx-background-radius: 25;" text="Cerrar Sesión" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#regresar" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+            <Button mnemonicParsing="false" onMouseClicked="#regresar" style="-fx-background-radius: 25;" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
@@ -76,44 +77,63 @@
                   <Insets bottom="20.0" top="20.0" />
                </VBox.margin>
             </GridPane>
-            <GridPane prefHeight="118.0" prefWidth="600.0">
-               <columnConstraints>
-                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="356.0" minWidth="10.0" prefWidth="130.0" />
-                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="356.0" minWidth="10.0" prefWidth="136.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="73.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="263.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="44.0" minHeight="7.0" prefHeight="21.0" vgrow="SOMETIMES" />
-               </rowConstraints>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <ComboBox fx:id="cbx" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#filtrar" prefHeight="30.0" prefWidth="154.0" promptText="Tipo de Vehiculo" GridPane.columnIndex="3" GridPane.halignment="LEFT" />
-                  <VBox prefHeight="81.0" prefWidth="266.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                  <VBox alignment="CENTER" prefHeight="98.0" prefWidth="205.0" spacing="25.0">
                      <children>
-                        <CheckBox fx:id="faño" mnemonicParsing="false" text="Filtrar por Año">
-                           <VBox.margin>
-                              <Insets top="2.0" />
-                           </VBox.margin>
-                        </CheckBox>
-                        <CheckBox fx:id="frecorrido" mnemonicParsing="false" text="Filtrar por Recorrido">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </CheckBox>
-                        <CheckBox fx:id="fprecio" mnemonicParsing="false" text="Filtrar por Precio">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </CheckBox>
+                        <Button mnemonicParsing="false" onMouseClicked="#mostrarFavoritos" prefHeight="39.0" prefWidth="170.0" style="-fx-background-radius: 25; -fx-background-color: rgba(224,38,43,255);" text="Mostrar Favoritos" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onMouseClicked="#MostrarTodos" prefHeight="36.0" prefWidth="175.0" style="-fx-background-radius: 25; -fx-background-color: rgba(224,38,43,255);" text="Mostrar Todos" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </Button>
                      </children>
                   </VBox>
-                  <Button mnemonicParsing="false" onMouseClicked="#filtrarFinal" text="Filtrar" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <VBox alignment="CENTER" prefHeight="98.0" prefWidth="339.0" spacing="20.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.40), 10, 0.5, 0.0, 0.0);">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="73.0" prefWidth="262.0">
+                           <children>
+                              <VBox alignment="CENTER_LEFT" prefHeight="81.0" prefWidth="266.0">
+                                 <children>
+                                    <CheckBox fx:id="faño" mnemonicParsing="false" text="Filtrar por Año">
+                                       <VBox.margin>
+                                          <Insets top="2.0" />
+                                       </VBox.margin>
+                                    </CheckBox>
+                                    <CheckBox fx:id="frecorrido" mnemonicParsing="false" text="Filtrar por Recorrido">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </CheckBox>
+                                    <CheckBox fx:id="fprecio" mnemonicParsing="false" text="Filtrar por Precio">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </CheckBox>
+                                 </children>
+                              </VBox>
+                              <ComboBox fx:id="cbx" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#filtrar" prefHeight="30.0" prefWidth="154.0" promptText="Tipo de Vehiculo" style="-fx-background-radius: 15;" />
+                           </children>
+                        </HBox>
+                        <Button alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#filtrarFinal" prefHeight="36.0" prefWidth="79.0" style="-fx-background-radius: 25; -fx-background-color: rgba(224,38,43,255);" text="Filtrar" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                  </VBox>
                </children>
                <VBox.margin>
-                  <Insets bottom="10.0" />
+                  <Insets bottom="25.0" />
                </VBox.margin>
-            </GridPane>
+            </HBox>
             <GridPane prefHeight="280.0" prefWidth="600.0">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="144.0" minWidth="10.0" prefWidth="52.0" />
@@ -141,7 +161,7 @@
                         <VBox fx:id="carro3" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" />
                      </children>
                   </VBox>
-                  <Button mnemonicParsing="false" onMouseClicked="#anterior" prefHeight="37.0" prefWidth="28.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Button mnemonicParsing="false" onMouseClicked="#anterior" prefHeight="37.0" prefWidth="28.0" style="-fx-background-color: white;" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <graphic>
                         <ImageView fitHeight="31.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -153,7 +173,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" onMouseClicked="#siguiente" GridPane.columnIndex="4">
+                  <Button mnemonicParsing="false" onMouseClicked="#siguiente" style="-fx-background-color: white;" GridPane.columnIndex="4">
                      <graphic>
                         <ImageView fitHeight="31.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>

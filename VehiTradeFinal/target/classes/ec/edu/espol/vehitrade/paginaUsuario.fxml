@@ -15,7 +15,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.vehitrade.controllers.PaginaUsuarioController">
    <top>
-      <GridPane prefHeight="105.0" prefWidth="800.0" style="-fx-background-color: #121212;" BorderPane.alignment="CENTER">
+      <GridPane prefHeight="84.0" prefWidth="800.0" style="-fx-background-color: #121212;" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="535.0" minWidth="10.0" prefWidth="502.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="298.0" />
@@ -24,12 +24,12 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="107.0" fitWidth="305.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
+            <ImageView fitHeight="67.0" fitWidth="246.0" layoutX="50.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
                <image>
                   <Image url="@imagenes/logoh.jpg" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" onMouseClicked="#cerrarSesion" text="Cerrar Sesión" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <Button mnemonicParsing="false" onMouseClicked="#cerrarSesion" style="-fx-background-radius: 25;" text="Cerrar Sesión" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>
@@ -40,18 +40,18 @@
    <center>
       <HBox prefHeight="800.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane prefHeight="456.0" prefWidth="800.0">
+            <GridPane prefHeight="456.0" prefWidth="798.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0">
+                  <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="331.0" prefWidth="233.0" style="-fx-border-color: black; -fx-border-width: 1; -fx-border-radius: 15; -fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 10, 0.5, 0.0, 0.0);">
                      <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#mostrarUsuario" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imagePerfil" fitHeight="150.0" fitWidth="150.0" layoutX="50.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@imagenes/usuario.png" />
                            </image>
@@ -80,30 +80,47 @@
                               <Font size="16.0" />
                            </font>
                         </Text>
+                        <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#editarPerfil" prefHeight="34.0" prefWidth="79.0" style="-fx-background-radius: 25;" text="Editar" textAlignment="CENTER">
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" GridPane.columnIndex="1">
+                  <VBox alignment="CENTER" spacing="25.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <children>
-                        <Button mnemonicParsing="false" onMouseClicked="#misVehiculos" text="Mis Vehículos">
+                        <Button mnemonicParsing="false" onMouseClicked="#misVehiculos" prefWidth="225.0" style="-fx-background-radius: 25;" text="Mis Vehículos">
                            <font>
                               <Font size="21.0" />
                            </font>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
                         </Button>
-                        <Button mnemonicParsing="false" onMouseClicked="#comprar" text="Comprar un Vehículo">
+                        <Button mnemonicParsing="false" onMouseClicked="#comprar" prefWidth="225.0" style="-fx-background-radius: 25;" text="Comprar un Vehículo">
                            <VBox.margin>
                               <Insets top="20.0" />
                            </VBox.margin>
                            <font>
                               <Font size="21.0" />
                            </font>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
                         </Button>
-                        <Button mnemonicParsing="false" onMouseClicked="#misOfertas" text="Mis Ofertas">
+                        <Button mnemonicParsing="false" onMouseClicked="#misOfertas" prefHeight="45.0" prefWidth="225.0" style="-fx-background-radius: 25;" text="Mis Ofertas">
                            <VBox.margin>
                               <Insets top="20.0" />
                            </VBox.margin>
                            <font>
                               <Font size="21.0" />
                            </font>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
                         </Button>
                      </children>
                   </VBox>

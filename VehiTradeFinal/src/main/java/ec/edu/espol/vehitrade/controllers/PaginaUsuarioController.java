@@ -12,7 +12,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -28,6 +31,8 @@ public class PaginaUsuarioController implements Initializable {
     private Text nombre;
     @FXML
     private Text apellido;
+    @FXML
+    private ImageView imagePerfil;
 
     /**
      * Initializes the controller class.
@@ -37,6 +42,14 @@ public class PaginaUsuarioController implements Initializable {
         usuario = SessionManager.getInstance().getUsuarioActual();
         nombre.setText(usuario.getNombre());
         apellido.setText(usuario.getApellidos());
+        double radius = imagePerfil.getFitWidth() / 2;
+        Image image = new Image("file:" + usuario.getDirImagen(),false);
+        imagePerfil.setImage(image);
+        imagePerfil.setPreserveRatio(false);
+        imagePerfil.setFitHeight(150);
+        imagePerfil.setFitWidth(150);
+        Circle clip = new Circle(radius, radius, radius);
+        imagePerfil.setClip(clip);
     }  
     
     
@@ -91,7 +104,16 @@ public class PaginaUsuarioController implements Initializable {
         }
     }  
 
+
     @FXML
-    private void mostrarUsuario(MouseEvent event) {
+    private void editarPerfil(MouseEvent event) {
+        try {
+            Stage stage = (Stage) nombre.getScene().getWindow();
+            stage.setWidth(625);  // Por ejemplo, ancho original
+            stage.setHeight(425); // Por ejemplo, altura original
+            App.setRoot("editarUsuario");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

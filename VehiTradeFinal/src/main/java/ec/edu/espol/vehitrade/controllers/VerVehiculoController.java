@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -71,11 +72,9 @@ public class VerVehiculoController implements Initializable {
 
     @FXML
     private void anterior(MouseEvent event) {
-<<<<<<< HEAD
-        if (vehiculosFiltrados != null && vehiculosFiltrados.size() > 1) {
-=======
+
         if (vehiculosFiltrados != null && !vehiculosFiltrados.isEmpty()) {
->>>>>>> 66a899dca045c5e5985842bb865df401bfcb06c3
+
             currentIndex = (currentIndex - 1 + vehiculosFiltrados.size()) % vehiculosFiltrados.size();
             mostrarDetalleVehiculo();
         } else {
@@ -86,11 +85,9 @@ public class VerVehiculoController implements Initializable {
 
     @FXML
     private void siguiente(MouseEvent event) {
-<<<<<<< HEAD
-        if (vehiculosFiltrados != null && vehiculosFiltrados.size() > 1) {
-=======
+
         if (vehiculosFiltrados != null && !vehiculosFiltrados.isEmpty()) {
->>>>>>> 66a899dca045c5e5985842bb865df401bfcb06c3
+
             currentIndex = (currentIndex + 1) % vehiculosFiltrados.size();
             mostrarDetalleVehiculo();
         } else {

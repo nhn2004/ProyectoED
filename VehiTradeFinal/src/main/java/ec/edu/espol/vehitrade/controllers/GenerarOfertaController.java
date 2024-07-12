@@ -53,7 +53,7 @@ public class GenerarOfertaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         usuario = SessionManager.getInstance().getUsuarioActual();
         vehiculo = SessionManager.getInstance().getVehiculoSeleccionado();
-        Image im = new Image(getClass().getResource("/ec/edu/espol/vehitrade/imagenes/"+vehiculo.getTipoVehiculo()+".png").toString());
+        Image im = new Image("file:" + vehiculo.getDirImagen());
         imagen.setImage(im);
         info.setText(vehiculo.toString());
     }    
@@ -103,17 +103,20 @@ public class GenerarOfertaController implements Initializable {
                             Alert a = new Alert(Alert.AlertType.ERROR,"Precio no válido");
                             a.show();
                             precioNuevo.setText("");
+                            e.printStackTrace();
 
                         }
                         try {
                             
                             App.setRoot("comprarVehiculo");
                         } catch (IOException ex) {
+                            ex.printStackTrace();
                         }
                     }
                     else{
                         Alert a = new Alert(Alert.AlertType.ERROR,"Ingrese un valor");
                         a.show(); 
+                        
                     }
                     
                 });

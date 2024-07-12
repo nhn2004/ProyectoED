@@ -16,25 +16,22 @@ import java.util.Iterator;
  *
  * @author laboratorio
  */
-public class DoublyCircularLinkedList<E> implements List<E>, Serializable{
-
+public class DoublyCircularLinkedList<E> implements List<E>, Serializable {
     private DoublyNodeList<E> last;
     
-    public DoublyCircularLinkedList(){
+    public DoublyCircularLinkedList() {
         this.last = null;
     }
 
     public DoublyNodeList<E> getLast() {
         return last;
     }
-    
-    
-    
+
     @Override
     public boolean addFirst(E e) {
-        if (e != null){
+        if (e != null) {
             DoublyNodeList<E> newNode = new DoublyNodeList<>(e);
-            if(last!=null){
+            if (last != null) {
                 newNode.setNext(last.getNext());
                 newNode.setPrevious(last);
                 last.getNext().setPrevious(newNode);
@@ -70,11 +67,11 @@ public class DoublyCircularLinkedList<E> implements List<E>, Serializable{
 
     @Override
     public E removeFirst() {
-        if(size()==1){
+        if (size() == 1) {
             E content = last.getContent();
-            last=null;
+            last = null;
             return content;
-        } else if(isEmpty()){
+        } else if (isEmpty()) {
             return null;
         }
         DoublyNodeList<E> n = last.getNext();
@@ -86,17 +83,17 @@ public class DoublyCircularLinkedList<E> implements List<E>, Serializable{
 
     @Override
     public E removeLast() {
-        if(size()==1){
+        if (size() == 1) {
             E content = last.getContent();
-            last=null;
+            last = null;
             return content;
-        }else if(size()==0){
+        } else if (size() == 0) {
             return null;
         }
         DoublyNodeList<E> n = last;
         n.getPrevious().setNext(n.getNext());
         n.getNext().setPrevious(n.getPrevious());
-        
+
         E content = last.getContent();
         this.setLast(n.getPrevious());
         return content;
@@ -104,125 +101,49 @@ public class DoublyCircularLinkedList<E> implements List<E>, Serializable{
 
     @Override
     public int size() {
-        if(last==null){
+        if (last == null) {
             return 0;
-        } else{
+        } else {
             int counter = 0;
-            for(DoublyNodeList<E> n = last.getNext();n!=last;n=n.getNext()){
+            DoublyNodeList<E> current = last.getNext();
+            do {
                 counter++;
-            }
-            counter++;
+                current = current.getNext();
+            } while (current != last.getNext());
             return counter;
         }
     }
 
     @Override
     public boolean isEmpty() {
-        return size()==0;
+        return size() == 0;
     }
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        last = null;
     }
 
     @Override
     public boolean add(int index, E element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public E remove(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public E get(int index) {
-         if (index < 0 || index >= size()) {
-             throw new IndexOutOfBoundsException("Index out of bounds");
-         }
-
-         DoublyNodeList<E> current = last.getNext(); // start from the first node
-         for (int i = 0; i < index; i++) {
-             current = current.getNext();
-         }
-         return current.getContent();
-     }
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
     @Override
     public E set(int index, E element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-   @Override
-public Iterator<E> iterator() {
-    return new Iterator<E>() {
-        private DoublyNodeList<E> cursor = last != null ? last.getNext() : null;
-        private DoublyNodeList<E> lastReturned = null;
-        private boolean start = last != null;
-
-        @Override
-        public boolean hasNext() {
-            return cursor != null && (cursor != last.getNext() || start);
-        }
-
-        @Override
-        public E next() {
-            lastReturned = cursor;
-            E e = cursor.getContent();
-            cursor = cursor.getNext();
-            start = false;
-            return e;
-        }
-
-        @Override
-        public void remove() {
-            if (lastReturned == null) throw new IllegalStateException();
-
-            DoublyNodeList<E> nextNode = lastReturned.getNext();
-            DoublyNodeList<E> prevNode = lastReturned.getPrevious();
-
-            prevNode.setNext(nextNode);
-            nextNode.setPrevious(prevNode);
-
-            if (lastReturned == last) {
-                last = prevNode;
-            }
-
-            lastReturned = null;
-        }
-    };
-}
-  
-    
-    public void setLast(DoublyNodeList<E> node){
-        this.last= node;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public Integer find(Comparator cmp, E elemento) {
-        Iterator<E> it= this.iterator();
-        int count = 0;
-        while(it.hasNext()){  
-            E n=it.next();
-            if (cmp.compare(n, elemento) == 0)
-                return count;
-            count +=1;
-        }
-        return null;
-    }
-
-    @Override
-    public List<E> findAll(Comparator cmp, E elemento) {
-        DoublyCircularLinkedList<E> nueva = new DoublyCircularLinkedList<>();
-        Iterator<E> it= this.iterator();
-        while(it.hasNext()){  
-            E n=it.next();
-            if (cmp.compare(n, elemento) == 0)
-                nueva.addLast(n);
-        }
-        return nueva;
-    }
     
     public void sort(Comparator<E> cmp) {
         if (size() > 1) {
@@ -243,4 +164,91 @@ public Iterator<E> iterator() {
             } while (!sorted);
         }
     }
+
+    public void setLast(DoublyNodeList<E> node) {
+        this.last = node;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+            private DoublyNodeList<E> cursor = last != null ? last.getNext() : null;
+            private DoublyNodeList<E> lastReturned = null;
+            private boolean start = last != null;
+
+            @Override
+            public boolean hasNext() {
+                return cursor != null && (cursor != last.getNext() || start);
+            }
+
+            @Override
+            public E next() {
+                lastReturned = cursor;
+                E e = cursor.getContent();
+                cursor = cursor.getNext();
+                start = false;
+                return e;
+            }
+
+            @Override
+            public void remove() {
+                if (lastReturned == null) throw new IllegalStateException();
+
+                DoublyNodeList<E> nextNode = lastReturned.getNext();
+                DoublyNodeList<E> prevNode = lastReturned.getPrevious();
+
+                prevNode.setNext(nextNode);
+                nextNode.setPrevious(prevNode);
+
+                if (lastReturned == last) {
+                    last = prevNode;
+                }
+
+                lastReturned = null;
+            }
+        };
+    }
+
+    @Override
+    public Integer find(Comparator comp, E elemento) {
+        Iterator<E> it = this.iterator();
+        int count = 0;
+        while (it.hasNext()) {
+            E n = it.next();
+            if (comp.compare(n, elemento) == 0)
+                return count;
+            count += 1;
+        }
+        return null;
+    }
+
+    @Override
+    public List<E> findAll(Comparator comp, E elemento) {
+        DoublyCircularLinkedList<E> nueva = new DoublyCircularLinkedList<>();
+        Iterator<E> it = this.iterator();
+        while (it.hasNext()) {
+            E n = it.next();
+            if (comp.compare(n, elemento) == 0)
+                nueva.addLast(n);
+        }
+        return nueva;
+    }
+    
+    public boolean contains(E element) {
+        if (element == null || last == null) {
+            return false;
+        }
+        DoublyNodeList<E> current = last.getNext();
+        do {
+            if (current.getContent().equals(element)) {
+                return true;
+            }
+            current = current.getNext();
+        } while (current != last.getNext());
+        return false;
+    }
+    
+
+    
+
 }
