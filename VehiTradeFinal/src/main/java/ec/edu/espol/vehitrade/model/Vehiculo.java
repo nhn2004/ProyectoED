@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Vehiculo implements Serializable {
-    
+
     private String tipoVehiculo;
     private String placa;
     private String modelo;
@@ -29,10 +29,11 @@ public class Vehiculo implements Serializable {
     private DoublyLinkedList<Oferta> ofertas;
     private String rutaImagen;
 
-    public Vehiculo() {}
+    public Vehiculo() {
+    }
 
-    public Vehiculo(String tipo, String placa, String modelo, String marca, String tipoMotor, 
-            int año, double recorrido, String color, String tipoCosmbustible, 
+    public Vehiculo(String tipo, String placa, String modelo, String marca, String tipoMotor,
+            int año, double recorrido, String color, String tipoCosmbustible,
             double precio, int idUsuario, String rutaImagen) {
         this.tipoVehiculo = tipo;
         this.placa = placa;
@@ -45,7 +46,7 @@ public class Vehiculo implements Serializable {
         this.tipoCosmbustible = tipoCosmbustible;
         this.precio = precio;
         this.idUsuario = idUsuario;
-        this.ofertas = new DoublyLinkedList<>(); 
+        this.ofertas = new DoublyLinkedList<>();
         this.rutaImagen = rutaImagen;
     }
 
@@ -112,9 +113,8 @@ public class Vehiculo implements Serializable {
     public void añadirOferta(Oferta o) {
         this.ofertas.addLast(o);
     }
-    
-    //setters
 
+    //setters
     public void setTipoVehiculo(String tipoVehiculo) {
         this.tipoVehiculo = tipoVehiculo;
     }
@@ -158,7 +158,6 @@ public class Vehiculo implements Serializable {
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
-    
 
     @Override
     public String toString() {
@@ -176,7 +175,7 @@ public class Vehiculo implements Serializable {
     }
 
     public static void saveListSer(DoublyCircularLinkedList<Vehiculo> vehiculos) {
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("VehiculoSer.txt"))) {
+        try ( ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("VehiculoSer.txt"))) {
             output.writeObject(vehiculos);
         } catch (IOException ioE) {
             ioE.printStackTrace();
@@ -185,7 +184,7 @@ public class Vehiculo implements Serializable {
 
     public static DoublyCircularLinkedList<Vehiculo> readListSer() {
         DoublyCircularLinkedList<Vehiculo> lista = new DoublyCircularLinkedList<>();
-        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream("VehiculoSer.txt"))) {
+        try ( ObjectInputStream input = new ObjectInputStream(new FileInputStream("VehiculoSer.txt"))) {
             lista = (DoublyCircularLinkedList<Vehiculo>) input.readObject();
         } catch (IOException | ClassNotFoundException ioE) {
             ioE.printStackTrace();
@@ -199,10 +198,11 @@ public class Vehiculo implements Serializable {
         while (iterator.hasNext()) {
             Vehiculo v = iterator.next();
             if (v.getPlaca().equals(this.getPlaca())) {
-                iterator.remove(); // Eliminamos el elemento actual de la lista
+                iterator.remove(); // Eliminar el vehículo existente
+                break;
             }
         }
-        vehiculos.addLast(this);
+        vehiculos.addLast(this); // Añadir el vehículo actualizado
         Vehiculo.saveListSer(vehiculos);
     }
 
@@ -251,4 +251,5 @@ public class Vehiculo implements Serializable {
         }
         return veh;
     }
+
 }

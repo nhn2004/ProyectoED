@@ -37,11 +37,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author nicol
- */
 public class MisVehiculosController implements Initializable {
 
     @FXML
@@ -83,7 +78,16 @@ public class MisVehiculosController implements Initializable {
         vehiculos = u.getVehiculos();
     }
 
-    private void mostrarVehiculos(DoublyCircularLinkedList<Vehiculo> vehiculos) {
+    public DoublyCircularLinkedList<Vehiculo> getVehiculos() {
+        return vehiculos;
+    }
+
+    public void actualizarListaVehiculos() {
+        vehiculos = SessionManager.getInstance().getUsuarioActual().getVehiculos();
+        mostrarVehiculos(vehiculos);
+    }
+
+    public void mostrarVehiculos(DoublyCircularLinkedList<Vehiculo> vehiculos) {
         carro1.getChildren().clear();
         carro2.getChildren().clear();
         carro3.getChildren().clear();
@@ -94,26 +98,26 @@ public class MisVehiculosController implements Initializable {
         } else {
             if (n == 1) {
                 currentVehiculo1 = vehiculos.getLast().getNext();
-                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
+                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent(), vehiculos, 0));
             }
             if (n == 2) {
                 currentVehiculo1 = vehiculos.getLast().getNext();
                 currentVehiculo2 = currentVehiculo1.getNext();
-                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
-                carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent()));
+                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent(), vehiculos, 0));
+                carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent(), vehiculos, 1));
             }
             if (n >= 3) {
                 currentVehiculo1 = vehiculos.getLast().getNext();
                 currentVehiculo2 = currentVehiculo1.getNext();
                 currentVehiculo3 = currentVehiculo2.getNext();
-                carro3.getChildren().add(crearVBoxVehiculo(currentVehiculo3.getContent()));
-                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
-                carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent()));
+                carro3.getChildren().add(crearVBoxVehiculo(currentVehiculo3.getContent(), vehiculos, 2));
+                carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent(), vehiculos, 0));
+                carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent(), vehiculos, 1));
             }
         }
     }
 
-    private VBox crearVBoxVehiculo(Vehiculo v) {
+    private VBox crearVBoxVehiculo(Vehiculo v, DoublyCircularLinkedList<Vehiculo> vehiculosFiltrados, int index) {
         VBox cuadro = new VBox();
         cuadro.setSpacing(10);
         cuadro.setAlignment(Pos.CENTER);
@@ -141,7 +145,7 @@ public class MisVehiculosController implements Initializable {
 
         Button verDetalleBtn = new Button("Ver Detalle");
         verDetalleBtn.setOnAction(event -> {
-            mostrarDetalleVehiculo(v);
+            mostrarVehiculoSeleccionado(vehiculosFiltrados, index);
         });
 
         Button editarBtn = new Button("Editar");
@@ -170,22 +174,24 @@ public class MisVehiculosController implements Initializable {
         return cuadro;
     }
 
-    private void mostrarDetalleVehiculo(Vehiculo v) {
-        Stage detalleStage = new Stage();
-        detalleStage.initModality(Modality.APPLICATION_MODAL);
-        detalleStage.setTitle("Detalle del Vehículo");
+    private void mostrarVehiculoSeleccionado(DoublyCircularLinkedList<Vehiculo> vehiculosFiltrados, int index) {
+        try {
+            System.out.println("Mostrando vehículo seleccionado: " + vehiculosFiltrados.getLast().getContent());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ec/edu/espol/vehitrade/verVehiculo.fxml"));
+            Parent root = loader.load();
+            System.out.println("FXML cargado correctamente.");
 
-        VBox detalleVBox = new VBox();
-        detalleVBox.setSpacing(10);
-        detalleVBox.setPadding(new Insets(20));
-        detalleVBox.setAlignment(Pos.CENTER);
+            VerVehiculoController controller = loader.getController();
+            controller.setVehiculos(vehiculosFiltrados, index);
 
-        Label detalleLabel = new Label(v.toString());
-        detalleVBox.getChildren().add(detalleLabel);
-
-        Scene detalleScene = new Scene(detalleVBox, 400, 300);
-        detalleStage.setScene(detalleScene);
-        detalleStage.showAndWait();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+            System.out.println("Nueva ventana mostrada correctamente.");
+        } catch (IOException ex) {
+            System.out.println("Error al cargar la nueva ventana.");
+            ex.printStackTrace();
+        }
     }
 
     private void mostrarEditarVehiculo(Vehiculo v) {
@@ -210,7 +216,7 @@ public class MisVehiculosController implements Initializable {
             stage.showAndWait();
 
             // Actualizamos la lista de vehículos después de la edición
-            mostrarVehiculos(vehiculos);
+            actualizarListaVehiculos();
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -266,9 +272,9 @@ public class MisVehiculosController implements Initializable {
         carro1.getChildren().clear();
         carro2.getChildren().clear();
         carro3.getChildren().clear();
-        carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent()));
-        carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent()));
-        carro3.getChildren().add(crearVBoxVehiculo(currentVehiculo3.getContent()));
+        carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent(), vehiculos, 0));
+        carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent(), vehiculos, 1));
+        carro3.getChildren().add(crearVBoxVehiculo(currentVehiculo3.getContent(), vehiculos, 2));
     }
 
     @FXML

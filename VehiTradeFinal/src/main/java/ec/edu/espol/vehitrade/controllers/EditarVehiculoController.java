@@ -50,6 +50,7 @@ public class EditarVehiculoController {
 
     private void cargarDatosVehiculo() {
         placa.setText(vehiculo.getPlaca());
+        placa.setEditable(false);  // Aseguramos que la placa no sea editable
         marca.setText(vehiculo.getMarca());
         modelo.setText(vehiculo.getModelo());
         color.setText(vehiculo.getColor());
@@ -63,7 +64,6 @@ public class EditarVehiculoController {
     @FXML
     private void guardarCambios() {
         try {
-            vehiculo.setPlaca(placa.getText());
             vehiculo.setMarca(marca.getText());
             vehiculo.setModelo(modelo.getText());
             vehiculo.setColor(color.getText());
@@ -74,11 +74,25 @@ public class EditarVehiculoController {
             vehiculo.setPrecio(Double.parseDouble(precio.getText()));
             vehiculo.updateFile();
 
-            Stage stage = (Stage) placa.getScene().getWindow();
-            stage.close();
+            misVehiculosController.mostrarVehiculos(misVehiculosController.getVehiculos());
+
+            cerrarVentana();
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error en los datos ingresados.");
             alert.show();
         }
+    }
+
+    @FXML
+    private void eliminarVehiculo() {
+        vehiculo.eliminar();
+        misVehiculosController.actualizarListaVehiculos();
+        cerrarVentana();
+    }
+
+    @FXML
+    private void cerrarVentana() {
+        Stage stage = (Stage) placa.getScene().getWindow();
+        stage.close();
     }
 }
