@@ -18,6 +18,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ *
+ * @author abrahamcedeno
+ */
 public class VerVehiculoController implements Initializable {
 
     @FXML
@@ -30,7 +34,7 @@ public class VerVehiculoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("VerVehiculoController inicializado.");
+        // Initialization logic if needed
     }
 
     public void setVehiculos(DoublyCircularLinkedList<Vehiculo> vehiculosFiltrados, int index) {
@@ -41,14 +45,13 @@ public class VerVehiculoController implements Initializable {
 
     private void mostrarDetalleVehiculo() {
         if (vehiculosFiltrados != null && !vehiculosFiltrados.isEmpty()) {
-            Vehiculo vehiculo = vehiculosFiltrados.get(currentIndex);
-            System.out.println("Mostrando detalles del vehículo: " + vehiculo);
+            Vehiculo vehiculo = getVehiculoAt(currentIndex);
+            if (vehiculo != null) {
+                File file = new File("src/ec/edu/espol/vehitrade/ImagenesVehículos/" + vehiculo.getPlaca() + ".png");
+                Image im = new Image(file.toURI().toString());
+                vehiculoImage.setImage(im);
 
-            File file = new File("src/ec/edu/espol/vehitrade/ImagenesVehículos/" + vehiculo.getPlaca() + ".png");
-            Image im = new Image(file.toURI().toString());
-            vehiculoImage.setImage(im);
-
-            vehiculoDatos.setText(
+                vehiculoDatos.setText(
                     "Marca: " + vehiculo.getMarca() +
                     "\nModelo: " + vehiculo.getModelo() +
                     "\nPlaca: " + vehiculo.getPlaca() +
@@ -57,10 +60,20 @@ public class VerVehiculoController implements Initializable {
                     "\nColor: " + vehiculo.getColor() +
                     "\nTipo de Combustible: " + vehiculo.getTipoCosmbustible() +
                     "\nPrecio: " + vehiculo.getPrecio()
-            );
-        } else {
-            System.out.println("Lista de vehículos filtrados es nula o está vacía.");
+                );
+            }
         }
+    }
+
+    private Vehiculo getVehiculoAt(int index) {
+        if (vehiculosFiltrados == null || index < 0 || index >= vehiculosFiltrados.size()) {
+            return null;
+        }
+        DoublyNodeList<Vehiculo> node = vehiculosFiltrados.getLast().getNext();
+        for (int i = 0; i < index; i++) {
+            node = node.getNext();
+        }
+        return node.getContent();
     }
 
     @FXML
@@ -71,31 +84,17 @@ public class VerVehiculoController implements Initializable {
 
     @FXML
     private void anterior(MouseEvent event) {
-<<<<<<< HEAD
-        if (vehiculosFiltrados != null && vehiculosFiltrados.size() > 1) {
-=======
-        if (vehiculosFiltrados != null && !vehiculosFiltrados.isEmpty()) {
->>>>>>> 66a899dca045c5e5985842bb865df401bfcb06c3
-            currentIndex = (currentIndex - 1 + vehiculosFiltrados.size()) % vehiculosFiltrados.size();
+        if (currentIndex > 0) {
+            currentIndex--;
             mostrarDetalleVehiculo();
-        } else {
-            Alert a = new Alert(Alert.AlertType.INFORMATION, "No hay suficientes vehiculos");
-            a.show();
         }
     }
 
     @FXML
     private void siguiente(MouseEvent event) {
-<<<<<<< HEAD
-        if (vehiculosFiltrados != null && vehiculosFiltrados.size() > 1) {
-=======
-        if (vehiculosFiltrados != null && !vehiculosFiltrados.isEmpty()) {
->>>>>>> 66a899dca045c5e5985842bb865df401bfcb06c3
-            currentIndex = (currentIndex + 1) % vehiculosFiltrados.size();
+        if (currentIndex < vehiculosFiltrados.size() - 1) {
+            currentIndex++;
             mostrarDetalleVehiculo();
-        } else {
-            Alert a = new Alert(Alert.AlertType.INFORMATION, "No hay suficientes vehiculos");
-            a.show();
         }
     }
 }
