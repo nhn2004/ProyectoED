@@ -14,8 +14,8 @@ public class Auto extends Vehiculo {
 
     public Auto(String tipo, String placa, String modelo, String marca, String tipoMotor, 
             int año, double recorrido, String color, String tipoCosmbustible, 
-            double precio, int idVendedor, String vidrios, String transmision, String rutaImagen) {
-        super(tipo, placa, modelo, marca, tipoMotor, año, recorrido, color, tipoCosmbustible, precio, idVendedor, rutaImagen);
+            double precio, int idVendedor, String vidrios, String transmision, String rutaImagen, String reparaciones, String mantenimiento) {
+        super(tipo, placa, modelo, marca, tipoMotor, año, recorrido, color, tipoCosmbustible, precio, idVendedor, rutaImagen, reparaciones, mantenimiento);
         this.vidrios = vidrios;
         this.transmision = transmision;
     }

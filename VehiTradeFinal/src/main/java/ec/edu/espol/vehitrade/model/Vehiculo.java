@@ -26,7 +26,9 @@ public class Vehiculo implements Serializable {
     private String tipoCosmbustible;
     private double precio;
     private int idUsuario;
-    private String dirImagen;
+    private DoublyCircularLinkedList<String> dirImagen =  new DoublyCircularLinkedList<>();
+    private String reparaciones;
+    private String mantenimiento;
     private DoublyLinkedList<Oferta> ofertas;
     
     private boolean esFavorito;
@@ -37,7 +39,7 @@ public class Vehiculo implements Serializable {
 
     public Vehiculo(String tipo,String placa, String modelo, String marca, String tipoMotor, 
             int año, double recorrido, String color, String tipoCosmbustible, 
-            double precio, int idUsuario, String dirImagen) {
+            double precio, int idUsuario, String dirImagen, String reparaciones, String mantenimiento) {
         this.tipoVehiculo = tipo;
         this.placa = placa;
         this.modelo = modelo;
@@ -50,17 +52,35 @@ public class Vehiculo implements Serializable {
         this.precio = precio;
         this.idUsuario=idUsuario;
         this.ofertas = new DoublyLinkedList<>(); 
-        this.dirImagen = dirImagen;
+        this.dirImagen.addLast(dirImagen);
         this.esFavorito=false;
+        this.reparaciones = reparaciones;
+        this.mantenimiento = mantenimiento;
         
     }
 
     public String getDirImagen() {
+        return dirImagen.getLast().getContent();
+    }
+    
+       public DoublyCircularLinkedList<String> getRutasImagenes() {
         return dirImagen;
     }
 
-    public void setDirImagen(String dirImagen) {
-        this.dirImagen = dirImagen;
+    public String getReparaciones() {
+        return reparaciones;
+    }
+
+    public String getMantenimiento() {
+        return mantenimiento;
+    }
+
+    public void setReparaciones(String reparaciones) {
+        this.reparaciones = reparaciones;
+    }
+
+    public void setMantenimiento(String mantenimiento) {
+        this.mantenimiento = mantenimiento;
     }
 
     public void setTipoVehiculo(String tipoVehiculo) {
@@ -181,20 +201,34 @@ public class Vehiculo implements Serializable {
         this.ofertas.addLast(o);
     }
     
-    
+    public void añadirImagen(String rutaImagen) {
+        this.dirImagen.addLast(rutaImagen);
+    }
+
+    public void eliminarImagen(String rutaImagen) {
+        Iterator<String> it = this.dirImagen.iterator();
+        while (it.hasNext()) {
+            if (it.next().equals(rutaImagen)) {
+                it.remove();
+                break;
+            }
+        }
+    }
 
     @Override
-    public String toString(){
-        return "Este "+this.tipoVehiculo+" tiene:\n"
-                + "Placa = "+this.placa+",\n"
-                + "Marca = "+this.marca+",\n"
-                + "Modelo = "+this.modelo+",\n"
-                + "Tipo de motor = "+this.tipoMotor+",\n"
-                + "Año = "+this.año+",\n"
-                + "Recorrido = "+this.recorrido+",\n"
-                + "Color = "+this.color+",\n"
-                + "Tipo de combustible = "+this.tipoCosmbustible+",\n"
-                + "Precio = "+this.precio;
+    public String toString() {
+        return "Este " + this.tipoVehiculo + " tiene:\n"
+                + "Placa = " + this.placa + ",\n"
+                + "Marca = " + this.marca + ",\n"
+                + "Modelo = " + this.modelo + ",\n"
+                + "Tipo de motor = " + this.tipoMotor + ",\n"
+                + "Año = " + this.año + ",\n"
+                + "Recorrido = " + this.recorrido + ",\n"
+                + "Color = " + this.color + ",\n"
+                + "Tipo de combustible = " + this.tipoCosmbustible + ",\n"
+                + "Precio = " + this.precio + ",\n"
+                + "Reparaciones = " + this.reparaciones + ",\n"
+                + "Mantenimiento = " + this.mantenimiento;
     }
 
     

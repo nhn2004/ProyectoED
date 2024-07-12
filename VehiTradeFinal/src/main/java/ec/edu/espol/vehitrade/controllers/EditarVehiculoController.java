@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 public class EditarVehiculoController {
 
     @FXML
@@ -30,13 +29,17 @@ public class EditarVehiculoController {
     private TextField tipoCombustible;
     @FXML
     private TextField precio;
+    @FXML
+    private TextField reparaciones;
+    @FXML
+    private TextField mantenimiento;
 
     private Vehiculo vehiculo;
     private MisVehiculosController misVehiculosController;
 
     @FXML
     private void initialize() {
-        // Inicialización si es necesaria
+        // Initialization if needed
     }
 
     public void setVehiculo(Vehiculo vehiculo) {
@@ -50,7 +53,7 @@ public class EditarVehiculoController {
 
     private void cargarDatosVehiculo() {
         placa.setText(vehiculo.getPlaca());
-        placa.setEditable(false);  // Aseguramos que la placa no sea editable
+        placa.setEditable(false);
         marca.setText(vehiculo.getMarca());
         modelo.setText(vehiculo.getModelo());
         color.setText(vehiculo.getColor());
@@ -59,6 +62,8 @@ public class EditarVehiculoController {
         tipoMotor.setText(vehiculo.getTipoMotor());
         tipoCombustible.setText(vehiculo.getTipoCosmbustible());
         precio.setText(String.valueOf(vehiculo.getPrecio()));
+        reparaciones.setText(vehiculo.getReparaciones());
+        mantenimiento.setText(vehiculo.getMantenimiento());
     }
 
     @FXML
@@ -72,22 +77,19 @@ public class EditarVehiculoController {
             vehiculo.setTipoMotor(tipoMotor.getText());
             vehiculo.setTipoCosmbustible(tipoCombustible.getText());
             vehiculo.setPrecio(Double.parseDouble(precio.getText()));
+            vehiculo.setReparaciones(reparaciones.getText());
+            vehiculo.setMantenimiento(mantenimiento.getText());
             vehiculo.updateFile();
 
-            misVehiculosController.mostrarVehiculos(misVehiculosController.getVehiculos());
+            if (misVehiculosController != null) {
+                misVehiculosController.mostrarVehiculos(misVehiculosController.getVehiculos());
+            }
 
             cerrarVentana();
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error en los datos ingresados.");
             alert.show();
         }
-    }
-
-    @FXML
-    private void eliminarVehiculo() {
-        vehiculo.eliminar();
-        misVehiculosController.actualizarListaVehiculos();
-        cerrarVentana();
     }
 
     @FXML

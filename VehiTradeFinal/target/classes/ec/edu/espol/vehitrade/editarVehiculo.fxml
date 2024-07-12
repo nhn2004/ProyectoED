@@ -42,9 +42,14 @@
     <Label text="Precio:" GridPane.rowIndex="9"/>
     <TextField fx:id="precio" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
 
-    <HBox spacing="10" GridPane.rowIndex="10" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+    <Label text="Reparaciones:" GridPane.rowIndex="10"/>
+    <TextField fx:id="reparaciones" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+
+    <Label text="Mantenimiento:" GridPane.rowIndex="11"/>
+    <TextField fx:id="mantenimiento" GridPane.columnIndex="1" GridPane.rowIndex="11"/>
+
+    <HBox spacing="10" GridPane.rowIndex="12" GridPane.columnSpan="2" GridPane.halignment="CENTER">
         <Button text="Guardar" onAction="#guardarCambios" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
-        <Button text="Eliminar" onAction="#eliminarVehiculo" style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
         <Button text="Cancelar" onAction="#cerrarVentana" style="-fx-background-color: #b3b3b3; -fx-text-fill: black;"/>
     </HBox>
 </GridPane>

@@ -30,8 +30,7 @@ import javafx.scene.text.Text;
  * FXML Controller class
  *
  * @author nicol
- */
-public class GenerarOfertaController implements Initializable {
+ */public class GenerarOfertaController implements Initializable {
 
     @FXML
     private Text info;
@@ -48,6 +47,7 @@ public class GenerarOfertaController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

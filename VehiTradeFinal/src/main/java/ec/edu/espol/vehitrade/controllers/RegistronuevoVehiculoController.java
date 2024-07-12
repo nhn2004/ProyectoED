@@ -7,6 +7,7 @@ package ec.edu.espol.vehitrade.controllers;
 import ec.edu.espol.vehitrade.App;
 import ec.edu.espol.vehitrade.model.Auto;
 import ec.edu.espol.vehitrade.model.Camioneta;
+import ec.edu.espol.vehitrade.model.DoublyCircularLinkedList;
 import ec.edu.espol.vehitrade.model.ObjetoExistente;
 import ec.edu.espol.vehitrade.model.SessionManager;
 import ec.edu.espol.vehitrade.model.Usuario;
@@ -36,8 +37,7 @@ import javafx.stage.Stage;
 
 /**
  * FXML Controller class
- */
-public class RegistronuevoVehiculoController implements Initializable {
+ */public class RegistronuevoVehiculoController implements Initializable {
 
     @FXML
     private ComboBox<String> tipoVehiculo;
@@ -61,9 +61,11 @@ public class RegistronuevoVehiculoController implements Initializable {
     private TextField vidrios;
     private TextField transmision;
     private TextField traccion;
+    private TextField reparaciones;
+    private TextField mantenimiento;
     private Usuario usuario;
     private String valor;
-    private String dirImagen;  // Nueva variable para la imagen del vehículo
+    private DoublyCircularLinkedList<String> dirImagen = new DoublyCircularLinkedList<>();
     private Text imagenSeleccionada;  // Texto para mostrar el nombre del archivo seleccionado
     private Button btnSeleccionarImagen;  // Botón para seleccionar la imagen
 
@@ -155,6 +157,22 @@ public class RegistronuevoVehiculoController implements Initializable {
         registroPrecio.getChildren().addAll(Precio, precio);
         this.precio = precio;
 
+        Text Reparaciones = new Text("Reparaciones:");
+        Reparaciones.setFont(new Font(16));
+        VBox.setMargin(Reparaciones, new Insets(20, 0, 0, 0));
+        TextField reparaciones = new TextField();
+        VBox.setMargin(reparaciones, new Insets(5, 0, 0, 0));
+        registroPrecio.getChildren().addAll(Reparaciones, reparaciones);
+        this.reparaciones = reparaciones;
+
+        Text Mantenimiento = new Text("Mantenimiento:");
+        Mantenimiento.setFont(new Font(16));
+        VBox.setMargin(Mantenimiento, new Insets(20, 0, 0, 0));
+        TextField mantenimiento = new TextField();
+        VBox.setMargin(mantenimiento, new Insets(5, 0, 0, 0));
+        registroPrecio.getChildren().addAll(Mantenimiento, mantenimiento);
+        this.mantenimiento = mantenimiento;
+
         registro1.getChildren().addAll(Placa, placa, Modelo, modelo, Año, año, TipoMotor, tipoMotor);
         registro2.getChildren().addAll(Color, color, Marca, marca, Recorrido, recorrido, TipoCombustible, tipoCombustible);
         this.placa = placa;
@@ -238,7 +256,6 @@ public class RegistronuevoVehiculoController implements Initializable {
     private void aceptar(MouseEvent event) {
         try {
             Vehiculo.verificarPlaca(placa.getText());
-            Button b = (Button) event.getSource();
             String s = valor;
             if ((placa.getText().equals("")) || (modelo.getText().equals("")) || (marca.getText().equals("")) || (color.getText().equals("")) || (año.getText().equals("")) || (recorrido.getText().equals("")) || (tipoCombustible.getText().equals(""))) {
                 Alert a = new Alert(Alert.AlertType.ERROR, "No escrito nada");
@@ -248,34 +265,34 @@ public class RegistronuevoVehiculoController implements Initializable {
                     double recorridodouble = Double.parseDouble(this.recorrido.getText());
                     int añoint = Integer.parseInt(this.año.getText());
                     double preciodouble = Double.parseDouble(this.precio.getText());
-                    if (dirImagen == null || dirImagen.isEmpty()) {
+                    if (dirImagen.isEmpty()) {
                         switch (s) {
                             case "Moto":
-                                dirImagen = "C:\\Users\\nicol\\ProyectoED\\VehiTradeFinal\\src\\main\\resources\\ec\\edu\\espol\\vehitrade\\imagenes\\Moto.png";
+                                dirImagen.addLast("\\Users\\nicol\\ProyectoED\\VehiTradeFinal\\src\\main\\resources\\ec\\edu\\espol\\vehitrade\\imagenes\\Moto.png");
                                 break;
                             case "Auto":
-                                dirImagen = "C:\\Users\\nicol\\ProyectoED\\VehiTradeFinal\\src\\main\\resources\\ec\\edu\\espol\\vehitrade\\imagenes\\Auto.png";
+                                dirImagen.addLast("\\Users\\nicol\\ProyectoED\\VehiTradeFinal\\src\\main\\resources\\ec\\edu\\espol\\vehitrade\\imagenes\\Auto.png");
                                 break;
                             case "Camioneta":
-                                dirImagen = "C:\\Users\\nicol\\ProyectoED\\VehiTradeFinal\\src\\main\\resources\\ec\\edu\\espol\\vehitrade\\imagenes\\Camioneta.png";
+                                dirImagen.addLast("\\Users\\nicol\\ProyectoED\\VehiTradeFinal\\src\\main\\resources\\ec\\edu\\espol\\vehitrade\\imagenes\\Camioneta.png");
                                 break;
                         }
                     }
                     switch (s) {
                         case "Moto": {
-                            Vehiculo v = new Vehiculo(s, placa.getText(), modelo.getText(), marca.getText(), tipoMotor.getText(), añoint, recorridodouble, color.getText(), tipoCombustible.getText(), preciodouble, usuario.getId(), dirImagen); // Añadir imagen
+                            Vehiculo v = new Vehiculo(s, placa.getText(), modelo.getText(), marca.getText(), tipoMotor.getText(), añoint, recorridodouble, color.getText(), tipoCombustible.getText(), preciodouble, usuario.getId(), dirImagen.getLast().getContent(), reparaciones.getText(), mantenimiento.getText());
                             registrarVehiculo(v);
                             ant();
                             break;
                         }
                         case "Auto": {
-                            Vehiculo v = new Auto(s, placa.getText(), modelo.getText(), marca.getText(), tipoMotor.getText(), añoint, recorridodouble, color.getText(), tipoCombustible.getText(), preciodouble, usuario.getId(), vidrios.getText(), transmision.getText(), dirImagen); // Añadir imagen
+                            Vehiculo v = new Auto(s, placa.getText(), modelo.getText(), marca.getText(), tipoMotor.getText(), añoint, recorridodouble, color.getText(), tipoCombustible.getText(), preciodouble, usuario.getId(), vidrios.getText(), transmision.getText(), dirImagen.getLast().getContent(), reparaciones.getText(), mantenimiento.getText());
                             registrarVehiculo(v);
                             ant();
                             break;
                         }
                         case "Camioneta": {
-                            Vehiculo v = new Camioneta(s, placa.getText(), modelo.getText(), marca.getText(), tipoMotor.getText(), añoint, recorridodouble, color.getText(), tipoCombustible.getText(), preciodouble, usuario.getId(), traccion.getText(), vidrios.getText(), transmision.getText(), dirImagen); // Añadir imagen
+                            Vehiculo v = new Camioneta(s, placa.getText(), modelo.getText(), marca.getText(), tipoMotor.getText(), añoint, recorridodouble, color.getText(), tipoCombustible.getText(), preciodouble, usuario.getId(), traccion.getText(), vidrios.getText(), transmision.getText(), dirImagen.getLast().getContent(), reparaciones.getText(), mantenimiento.getText());
                             registrarVehiculo(v);
                             ant();
                             break;
@@ -304,7 +321,7 @@ public class RegistronuevoVehiculoController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar Imagen");
         fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Archivos de Imagen", "*.png", "*.jpg", "*.jpeg")
+                new FileChooser.ExtensionFilter("Archivos de Imagen", "*.png", "*.jpg", "*.jpeg")
         );
         Stage stage = (Stage) tipoVehiculo.getScene().getWindow();
         File file = fileChooser.showOpenDialog(stage);
@@ -321,8 +338,8 @@ public class RegistronuevoVehiculoController implements Initializable {
 
                 Files.copy(file.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-                // Actualizar la dirección de la imagen del vehículo
-                dirImagen = destFile.getPath();
+                // Añadir la dirección de la imagen a la lista de imágenes del vehículo
+                dirImagen.addLast(destFile.getPath());
 
                 // Mostrar el nombre del archivo seleccionado
                 imagenSeleccionada.setText("Imagen seleccionada: " + file.getName());

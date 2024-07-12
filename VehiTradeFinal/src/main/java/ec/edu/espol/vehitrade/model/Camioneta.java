@@ -16,8 +16,8 @@ public class Camioneta extends Vehiculo {
 
     public Camioneta(String tipo, String placa, String modelo, String marca, String tipoMotor, int año, 
             double recorrido, String color, String tipoCosmbustible, double precio, int idVendedor, 
-            String traccion, String vidrios, String transmision, String rutaImagen) {
-        super(tipo, placa, modelo, marca, tipoMotor, año, recorrido, color, tipoCosmbustible, precio, idVendedor, rutaImagen);
+            String traccion, String vidrios, String transmision, String rutaImagen, String reparaciones, String mantenimiento) {
+        super(tipo, placa, modelo, marca, tipoMotor, año, recorrido, color, tipoCosmbustible, precio, idVendedor, rutaImagen,reparaciones,  mantenimiento);
         this.traccion = traccion;
         this.vidrios = vidrios;
         this.transmision = transmision;
