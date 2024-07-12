@@ -138,8 +138,16 @@ public class DoublyCircularLinkedList<E> implements List<E>, Serializable{
 
     @Override
     public E get(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+         if (index < 0 || index >= size()) {
+             throw new IndexOutOfBoundsException("Index out of bounds");
+         }
+
+         DoublyNodeList<E> current = last.getNext(); // start from the first node
+         for (int i = 0; i < index; i++) {
+             current = current.getNext();
+         }
+         return current.getContent();
+     }
 
     @Override
     public E set(int index, E element) {

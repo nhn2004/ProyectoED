@@ -14,7 +14,10 @@ import ec.edu.espol.vehitrade.model.Utilitaria;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.Optional;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.function.BiConsumer;
 import javafx.event.ActionEvent;
@@ -60,16 +63,17 @@ public class ComprarVehiculoController implements Initializable {
     private CheckBox fprecio;
 
     private DoublyCircularLinkedList<Vehiculo> vehiculos;
+    private DoublyCircularLinkedList<Vehiculo> vehiculosFiltrados;
     private DoublyNodeList<Vehiculo> currentVehiculo1;
     private DoublyNodeList<Vehiculo> currentVehiculo2;
     private DoublyNodeList<Vehiculo> currentVehiculo3;
     private int n;
-    private double maxAno;
-    private double minAno;
-    private double maxRecorrido;
-    private double minRecorrido;
-    private double maxPrecio;
-    private double minPrecio;
+    private double maxAno = Double.MAX_VALUE;
+    private double minAno = Double.MIN_VALUE;
+    private double maxRecorrido = Double.MAX_VALUE;
+    private double minRecorrido = Double.MIN_VALUE;
+    private double maxPrecio = Double.MAX_VALUE;
+    private double minPrecio = Double.MIN_VALUE;
     private String tipoVehiculoSeleccionado;
 
     private Usuario usuario;
@@ -114,7 +118,8 @@ public class ComprarVehiculoController implements Initializable {
 
         String[] categorias = {"Auto", "Moto", "Camioneta", "Todos"};
         cbx.getItems().addAll(categorias);
-        mostrarVehiculos(vehiculos);
+        vehiculosFiltrados = vehiculos; // Inicializamos vehiculosFiltrados con todos los vehículos
+        mostrarVehiculos(vehiculosFiltrados);
     }
 
     @FXML
@@ -150,20 +155,41 @@ public class ComprarVehiculoController implements Initializable {
 
     @FXML
     private void filtrarFinal(MouseEvent event) {
-        DoublyCircularLinkedList<Vehiculo> veh = vehiculos;
+        vehiculosFiltrados = vehiculos;
         if (cbx.getValue() != null && !cbx.getValue().equals("Todos")) {
-            veh = Utilitaria.filtrarTipoVehiculo(veh, tipoVehiculoSeleccionado);
+            vehiculosFiltrados = Utilitaria.filtrarTipoVehiculo(vehiculos, tipoVehiculoSeleccionado);
         }
-        if (faño.isSelected()) {
-            veh = Utilitaria.filtrarAño(veh, minAno, maxAno);
+
+        Queue<Vehiculo> queue = new PriorityQueue<>((v1, v2) -> {
+            if (faño.isSelected()) {
+                return Double.compare(v1.getAño(), v2.getAño());
+            } else if (frecorrido.isSelected()) {
+                return Double.compare(v1.getRecorrido(), v2.getRecorrido());
+            } else if (fprecio.isSelected()) {
+                return Double.compare(v1.getPrecio(), v2.getPrecio());
+            }
+            return 0;
+        });
+        for (Vehiculo v : vehiculosFiltrados) {
+            if (faño.isSelected() && (v.getAño() < minAno || v.getAño() > maxAno)) {
+                continue;
+            }
+            if (frecorrido.isSelected() && (v.getRecorrido() < minRecorrido || v.getRecorrido() > maxRecorrido)) {
+                continue;
+            }
+            if (fprecio.isSelected() && (v.getPrecio() < minPrecio || v.getPrecio() > maxPrecio)) {
+                continue;
+            }
+            queue.add(v);
         }
-        if (frecorrido.isSelected()) {
-            veh = Utilitaria.filtrarRecorrido(veh, minRecorrido, maxRecorrido);
+
+        // Crear nueva lista filtrada y ordenada
+        vehiculosFiltrados = new DoublyCircularLinkedList<>();
+        while (!queue.isEmpty()) {
+            vehiculosFiltrados.addLast(queue.poll());
         }
-        if (fprecio.isSelected()) {
-            veh = Utilitaria.filtrarPrecio(veh, minPrecio, maxPrecio);
-        }
-        mostrarVehiculos(veh);
+
+        mostrarVehiculos(vehiculosFiltrados);
     }
 
     private void mostrarDialogoRango(String titulo, double valorMinimoActual, double valorMaximoActual, BiConsumer<Double, Double> callback) {
@@ -263,7 +289,7 @@ public class ComprarVehiculoController implements Initializable {
 
     private void mostrarVehiculoSeleccionado(DoublyCircularLinkedList<Vehiculo> vehiculosFiltrados, int index) {
         try {
-            System.out.println("Mostrando vehículo seleccionado: " + vehiculosFiltrados.getLast().getContent());
+            System.out.println("Mostrando vehículo seleccionado: " + vehiculosFiltrados.get(index));
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ec/edu/espol/vehitrade/verVehiculo.fxml"));
             Parent root = loader.load();
             System.out.println("FXML cargado correctamente.");
@@ -285,9 +311,26 @@ public class ComprarVehiculoController implements Initializable {
         carro1.getChildren().clear();
         carro2.getChildren().clear();
         carro3.getChildren().clear();
-        carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent(), vehiculos, 0));
-        carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent(), vehiculos, 1));
-        carro3.getChildren().add(crearVBoxVehiculo(currentVehiculo3.getContent(), vehiculos, 2));
+
+        if (currentVehiculo1 != null) {
+            carro1.getChildren().add(crearVBoxVehiculo(currentVehiculo1.getContent(), vehiculosFiltrados, getIndex(currentVehiculo1)));
+        }
+        if (currentVehiculo2 != null) {
+            carro2.getChildren().add(crearVBoxVehiculo(currentVehiculo2.getContent(), vehiculosFiltrados, getIndex(currentVehiculo2)));
+        }
+        if (currentVehiculo3 != null) {
+            carro3.getChildren().add(crearVBoxVehiculo(currentVehiculo3.getContent(), vehiculosFiltrados, getIndex(currentVehiculo3)));
+        }
+    }
+
+    private int getIndex(DoublyNodeList<Vehiculo> node) {
+        int index = 0;
+        DoublyNodeList<Vehiculo> current = vehiculosFiltrados.getLast().getNext();
+        while (current != node) {
+            current = current.getNext();
+            index++;
+        }
+        return index;
     }
 
     @FXML
